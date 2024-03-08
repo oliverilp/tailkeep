@@ -25,8 +25,10 @@ RUN if ! cat /etc/group | grep -e "^npm:" > /dev/null 2>&1; then groupadd -r npm
 
 # Install base dependencies
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends \
-    python3-minimal python-is-python3 python3-pip ffmpeg atomicparsley \
+    && apt-get -y install --no-install-recommends xattr \
+    python3-minimal python-is-python3 python3-pip \
+    python3-certifi python3-websockets python3-requests python3-brotli \
+    python3-mutagen ffmpeg atomicparsley \
     && apt autoremove -y --purge \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
