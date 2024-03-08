@@ -22,6 +22,7 @@
       "ppa": "false"
     }
   },
+  "postCreateCommand": "sudo chown node:node node_modules .next",
   "postStartCommand": "yt-dlp -U",
 
   // Configure tool-specific properties.
