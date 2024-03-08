@@ -1,0 +1,12 @@
+# Video
+-f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio'
+--merge-output-format mp4
+
+# Metadata
+--xattrs
+# --write-thumbnail
+
+--embed-thumbnail
+--embed-subs
+# --all-subs
+--add-metadata
