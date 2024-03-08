@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  db:
+    container_name: postgres
+    image: postgres:alpine
+    restart: always
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: next_tasks
+    ports:
+      - 5432:5432
+
+networks:
+  youtube-dl:
+    name: youtube-dl
+    driver: bridge

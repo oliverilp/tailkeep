@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  youtube-dl-web-ui:
+    container_name: youtube-dl-web-ui
+    # Note that the path of the Dockerfile and context is relative to the *primary*
+    # docker-compose.yml file (the first in the devcontainer.json "dockerComposeFile"
+    # array). The sample below assumes your primary file is in the root of your project.
+    build:
+      context: .
+      dockerfile: ../.devcontainer/Dockerfile
+
+    volumes:
+      # Mounts the project folder to '/workspace'. While this file is in .devcontainer,
+      # mounts are relative to the first file in the list, which is a level up.
+      - ../:/workspace:cached
+
+    depends_on:
+      - db
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: /bin/sh -c "while sleep 1000; do :; done"
