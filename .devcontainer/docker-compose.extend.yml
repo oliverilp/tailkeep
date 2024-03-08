@@ -15,8 +15,8 @@ services:
       # mounts are relative to the first file in the list, which is a level up.
       - ./config.txt:/etc/yt-dlp/config.txt:cached
       - ../:/workspace:cached
-      - youtube-dl-node:/workspace/node_modules
-      - youtube-dl-node:/workspace/.next
+      - youtube-dl-node:/workspace/node_modules/
+      - youtube-dl-next:/workspace/.next/
 
     depends_on:
       - db
@@ -26,3 +26,6 @@ services:
 
 volumes:
   youtube-dl-node:
+    driver: local
+  youtube-dl-next:
+    driver: local
