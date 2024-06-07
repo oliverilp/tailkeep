@@ -23,6 +23,6 @@ services:
     entrypoint: redis-server --appendonly yes
 
 networks:
-  youtube-dl:
-    name: youtube-dl
+  tailkeep:
+    name: tailkeep
     driver: bridge

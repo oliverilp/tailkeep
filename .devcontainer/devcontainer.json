@@ -1,10 +1,10 @@
 {
-  "name": "YouTube DL Web UI",
+  "name": "Tailkeep",
   "dockerComposeFile": [
     "../docker/docker-compose.yml",
     "docker-compose.extend.yml"
   ],
-  "service": "youtube-dl-web-ui",
+  "service": "tailkeep-server",
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
   "features": {

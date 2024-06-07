@@ -1,0 +1,13 @@
+{
+  "extends": "@tailkeep/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "plugins": [{ "name": "next" }],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+      // "@repo/*": ["../../apps/*", "../../packages/*"] // all packages and apps from root
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  youtube-dl-web-ui:
-    container_name: youtube-dl-web-ui
+  tailkeep-server:
+    container_name: tailkeep-server
     # Note that the path of the Dockerfile and context is relative to the *primary*
     # docker-compose.yml file (the first in the devcontainer.json "dockerComposeFile"
     # array). The sample below assumes your primary file is in the root of your project.
@@ -15,8 +15,8 @@ services:
       # mounts are relative to the first file in the list, which is a level up.
       - ./config.txt:/etc/yt-dlp/config.txt:cached
       - ../:/workspace:cached
-      - youtube-dl-node:/workspace/node_modules/
-      - youtube-dl-next:/workspace/.next/
+      - tailkeep-node:/workspace/node_modules/
+      - tailkeep-next:/workspace/.next/
 
     depends_on:
       - db
@@ -25,7 +25,7 @@ services:
     command: /bin/sh -c "while sleep 1000; do :; done"
 
 volumes:
-  youtube-dl-node:
+  tailkeep-node:
     driver: local
-  youtube-dl-next:
+  tailkeep-next:
     driver: local
