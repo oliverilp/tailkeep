@@ -9,8 +9,11 @@ import { VideoAdd } from './schema';
 async function handler(data: InputType): Promise<ReturnType> {
   const { url } = data;
 
+  console.log('video add handler');
   try {
     await myQueue.add('myJobName', { foo: url });
+    console.log(myQueue.count());
+    console.log('added to queue');
 
     return { success: true, data: null };
   } catch (error) {

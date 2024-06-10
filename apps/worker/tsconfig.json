@@ -1,0 +1,9 @@
+{
+  "extends": "@tailkeep/typescript-config/worker.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "lib": ["ES2015", "esnext"]
+  },
+  "exclude": ["node_modules"],
+  "include": ["./src"]
+}

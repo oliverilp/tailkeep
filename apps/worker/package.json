@@ -1,0 +1,25 @@
+{
+  "name": "@tailkeep/worker",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsup --watch --onSuccess \"node dist/index.js\"",
+    "build": "pnpm tsup"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "@tailkeep/eslint-config": "workspace:*",
+    "@tailkeep/typescript-config": "workspace:*",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "@typescript-eslint/parser": "^6.20.0",
+    "prettier": "3.2.4",
+    "tsup": "^8.1.0",
+    "typescript": "^5.4.5"
+  }
+}

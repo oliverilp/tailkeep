@@ -2,9 +2,9 @@
   "name": "tailkeep",
   "private": true,
   "scripts": {
-    "build": "turbo build --log-order=stream",
-    "dev": "turbo dev --log-order=stream",
-    "lint": "turbo lint --log-order=stream",
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
     "type-check": "turbo type-check",
     "clean": "turbo clean",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
@@ -18,7 +18,7 @@
   },
   "packageManager": "pnpm@9.1.4",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "workspaces": [
     "apps/server",
