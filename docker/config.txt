@@ -1,12 +1,16 @@
 # Video
 -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio'
---merge-output-format mp4
+#-f b # DEBUG
+#--merge-output-format mp4
 
 # Metadata
---xattrs
+#--xattrs
 # --write-thumbnail
 
---embed-thumbnail
---embed-subs
+#--embed-thumbnail
+#--embed-subs
 # --all-subs
---add-metadata
+#--add-metadata
+
+#-o /dev/null # 
+

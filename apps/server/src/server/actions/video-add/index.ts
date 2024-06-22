@@ -1,6 +1,6 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+// import { revalidatePath } from 'next/cache';
 import { createSafeAction } from '@/lib/create-safe-action';
 import { myQueue } from '@/lib/bullmq';
 import type { InputType, ReturnType } from './types';
@@ -19,7 +19,7 @@ async function handler(data: InputType): Promise<ReturnType> {
   } catch (error) {
     return { success: false, error: 'Failed to add video.' };
   } finally {
-    revalidatePath('/');
+    // revalidatePath('/');
   }
 }
 

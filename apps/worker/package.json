@@ -9,6 +9,9 @@
     "dev": "tsup --watch --onSuccess \"node dist/index.js\"",
     "build": "pnpm tsup"
   },
+  "dependencies": {
+    "bullmq": "^5.7.9"
+  },
   "devDependencies": {
     "@types/node": "^20.11.17",
     "@tailkeep/eslint-config": "workspace:*",
