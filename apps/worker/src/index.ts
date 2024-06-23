@@ -1,19 +1,18 @@
-import { Worker, Job, QueueEvents } from 'bullmq';
+import { Worker, Job } from 'bullmq';
 import { DownloadProgress, Downloader } from './downloader';
 
-function delay(time: number) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, time);
-  });
-}
-
 async function processJob(job: Job) {
+  let previous = '';
+
   const onProgressCallback = (progress: DownloadProgress) => {
+    const current = JSON.stringify(progress);
+    if (previous === current) {
+      return;
+    }
+
+    previous = current;
     void job.updateProgress(progress);
   };
-
-  // console.log('worker job', job.data);
-  // await delay(1000);
 
   const downloader = new Downloader();
   const url = 'https://youtu.be/Ibjm2KHfymo';
@@ -25,7 +24,7 @@ async function processJob(job: Job) {
 
 const myWorker = new Worker('myqueue', processJob, {
   connection: {
-    host: 'redis',
+    host: 'localhost',
     port: 6379
   }
 });

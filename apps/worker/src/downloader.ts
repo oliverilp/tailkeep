@@ -2,13 +2,15 @@ import { CommandExecutor } from './command-executor';
 
 export interface DownloadProgress {
   status: string | null;
-  progress: string | null;
+  progress: number;
 }
 
 export type ProgressCallback = (data: DownloadProgress) => void;
 
 export class Downloader {
   private cmd: CommandExecutor;
+  private status: string | null = null;
+  private progress: number = 0;
 
   constructor() {
     this.cmd = new CommandExecutor();
@@ -21,39 +23,30 @@ export class Downloader {
       /\[(.*?)\]\s+(\d+\.?\d*%)\s+of\s+~?\s+(\d+\.\d+\w{1,3})\s+(?:in \d+:\d+(?::\d+)?\s+)?at\s+(\d+\.\d+\w{1,3}\/s)(?:\s+ETA\s+(?:(\d+:\d+(?::\d+)?)|Unknown))?/;
     const categoryRegex = /\[(.*?)\]/;
 
-    // const text = data.toString();
     const downloadMatch = text.match(downloadRegex);
     const statusMatch = text.match(categoryRegex);
 
-    let status = null;
     if (statusMatch) {
       const [value] = statusMatch;
-      status = value;
-
-      // if (value === '[download]') {
-      //   console.log(text);
-      // }
+      this.status = value;
     }
 
-    let progress = null;
     if (downloadMatch) {
-      const [fullMatch, group1, group2, group3, group4, group5] = downloadMatch;
-      const percentage = parseFloat(group2);
+      const [fullMatch, status, progress, totalSize, speed, eta] =
+        downloadMatch;
+      const percentage = parseFloat(progress);
 
-      // console.log('Full Match:', fullMatch);
-      // console.log('Group 1 (Text inside brackets):', group1);
-      // console.log('Download:', group2);
-      // console.log('Group 3 (Download total size):', group3);
-      // console.log('Group 4 (Speed):', group4);
-      // console.log('Group 5 (Time remaining):', group5);
+      console.log('match', fullMatch);
 
-      progress = group2;
+      if (percentage >= this.progress) {
+        this.progress = percentage;
+      }
     } else {
       // console.log('No match found:');
       // console.log(text);
     }
 
-    return { status, progress };
+    return { status: this.status, progress: this.progress };
   }
 
   onError(text: string) {

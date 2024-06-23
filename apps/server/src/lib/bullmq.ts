@@ -1,9 +1,12 @@
+import {
+  DownloadProgress,
+  DownloadProgressType
+} from '@/server/models/progress';
 import { Queue, QueueEvents, type ConnectionOptions } from 'bullmq';
 import EventEmitter from 'events';
-import { z } from 'zod';
 
 const connection: ConnectionOptions = {
-  host: 'redis',
+  host: 'localhost',
   port: 6379
 };
 
@@ -12,24 +15,6 @@ export const myQueue = new Queue('myqueue', { connection });
 export const progressEmitter = new EventEmitter();
 
 const queueEvents = new QueueEvents('myqueue', { connection });
-
-export const DownloadProgress = z.object({
-  status: z.string().nullable(),
-  progress: z.string().nullable()
-});
-
-export type DownloadProgressType = z.infer<typeof DownloadProgress>;
-
-export interface FakeDB {
-  download: DownloadProgressType;
-}
-
-export const fakeDB: FakeDB = {
-  download: {
-    status: null,
-    progress: null
-  }
-};
 
 queueEvents.on(
   'progress',
@@ -41,9 +26,6 @@ queueEvents.on(
       return;
     }
     const download = validationResult.data;
-    fakeDB.download = download;
-
-    console.log(fakeDB.download);
     progressEmitter.emit<DownloadProgressType>('update', download);
   }
 );

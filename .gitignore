@@ -55,3 +55,9 @@ next-env.d.ts
 /docker/.env
 /docker/postgres_data
 /docker/redis_data
+
+# video files
+*.webm
+*.mp4
+*.mov
+*.mkv
