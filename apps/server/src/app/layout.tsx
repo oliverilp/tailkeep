@@ -6,8 +6,8 @@ import { cn } from '@/lib/utils';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Next Tasks',
-  description: 'Open source tasks management app'
+  title: 'Tailkeep',
+  description: 'YouTube Downloader UI'
 };
 
 export default function RootLayout({

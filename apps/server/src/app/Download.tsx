@@ -27,23 +27,50 @@ function Download(): React.JSX.Element {
     }
   };
 
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     void poll();
+  //   }, 1000);
+
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, []);
+
+  const [events, setEvents] = useState<string[]>([]);
+
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      void poll();
-    }, 1000);
+    const eventSource = new EventSource('/api/sse');
+    console.log('eventSource', eventSource);
+
+    eventSource.onmessage = (event) => {
+      setEvents((prevEvents) => [...prevEvents, `${event.data} (${new Date()})`]);
+      console.log('onmessage', event);
+    };
+
+    eventSource.onerror = (error) => {
+      console.error('EventSource failed:', error);
+      eventSource.close();
+    };
 
     return () => {
-      clearInterval(intervalId);
+      eventSource.close();
     };
   }, []);
 
   return (
     <>
       <div className="flex flex-col">
-        <h2>Add new video</h2>
+        <h2>Add new video working</h2>
         <div className="w-fit">Status: {status}</div>
         <div className="w-fit">Progress: {progress}</div>
       </div>
+
+      <ul>
+        {events.map((event, index) => (
+          <li key={index}>{event}</li>
+        ))}
+      </ul>
 
       <Button variant="outline" onClick={download}>
         Download

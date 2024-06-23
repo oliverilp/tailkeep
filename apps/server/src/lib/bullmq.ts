@@ -1,4 +1,5 @@
 import { Queue, QueueEvents, type ConnectionOptions } from 'bullmq';
+import EventEmitter from 'events';
 import { z } from 'zod';
 
 const connection: ConnectionOptions = {
@@ -8,6 +9,7 @@ const connection: ConnectionOptions = {
 
 // Create a new connection in every instance
 export const myQueue = new Queue('myqueue', { connection });
+export const progressEmitter = new EventEmitter();
 
 const queueEvents = new QueueEvents('myqueue', { connection });
 
@@ -41,6 +43,7 @@ queueEvents.on(
     const download = validationResult.data;
     fakeDB.download = download;
 
-    console.log(fakeDB);
+    console.log(fakeDB.download);
+    progressEmitter.emit<DownloadProgressType>('update', download);
   }
 );
