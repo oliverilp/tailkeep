@@ -1,10 +1,14 @@
+import { addVideo } from '@/server/add-metadata';
+import { addProgress } from '@/server/add-progress';
+import { completeProgress } from '@/server/complete-progress';
 import { Metadata } from '@/server/models/metadata';
 import {
   DownloadProgress,
   DownloadProgressType
 } from '@/server/models/progress';
-import { Queue, QueueEvents, type ConnectionOptions } from 'bullmq';
+import { Queue, QueueEvents, type ConnectionOptions, Job } from 'bullmq';
 import EventEmitter from 'events';
+import { z } from 'zod';
 
 const connection: ConnectionOptions = {
   host: 'localhost',
@@ -18,21 +22,31 @@ export const progressEmitter = new EventEmitter();
 const downloadEvents = new QueueEvents('download-queue', { connection });
 downloadEvents.on(
   'progress',
-  ({ jobId, data }: { jobId: string; data: number | object }) => {
-    const validationResult = DownloadProgress.safeParse(data);
-    if (!validationResult.success) {
-      return;
-    }
-    const download = validationResult.data;
-    progressEmitter.emit<DownloadProgressType>('update', download);
+  ({ data }: { jobId: string; data: number | object }) => {
+    const progress = DownloadProgress.parse(data);
+    progressEmitter.emit<DownloadProgressType>('update', progress);
+
+    void addProgress(progress);
   }
 );
+downloadEvents.on('completed', async ({ jobId }) => {
+  const job = await Job.fromId(downloadQueue, jobId);
+  if (!job) {
+    return;
+  }
+
+  const videoId = z.number().parse(job.returnvalue?.videoId);
+  void completeProgress(videoId);
+});
 
 const metadataEvents = new QueueEvents('metadata-queue', { connection });
-metadataEvents.on(
-  'progress',
-  ({ jobId, data }: { jobId: string; data: number | object }) => {
-    const metadata = Metadata.parse(data);
-    console.log('metadata update', metadata);
+metadataEvents.on('completed', async ({ jobId }) => {
+  const job = await Job.fromId(metadataQueue, jobId);
+  if (!job) {
+    return;
   }
-);
+
+  const metadata = Metadata.parse(job.returnvalue?.metadata);
+
+  void addVideo(metadata);
+});

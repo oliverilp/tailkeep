@@ -1,8 +1,13 @@
 import { CommandExecutor } from './command-executor';
 
 export interface DownloadProgress {
+  videoId: number;
+  active: boolean;
   status: string | null;
   progress: number;
+  size: string | null;
+  speed: string | null;
+  eta: string | null;
 }
 
 export type ProgressCallback = (data: DownloadProgress) => void;
@@ -11,8 +16,14 @@ export class Downloader {
   private cmd: CommandExecutor;
   private status: string | null = null;
   private progress: number = 0;
+  private size: string | null = null;
+  private speed: string | null = null;
+  private eta: string | null = null;
 
-  constructor() {
+  constructor(
+    private videoId: number,
+    private url: string
+  ) {
     this.cmd = new CommandExecutor();
   }
 
@@ -32,11 +43,19 @@ export class Downloader {
     }
 
     if (downloadMatch) {
-      const [fullMatch, status, progress, totalSize, speed, eta] =
+      const [_fullMatch, _status, progress, totalSize, speed, eta] =
         downloadMatch;
       const percentage = parseFloat(progress);
 
-      // console.log('match', fullMatch);
+      if (totalSize && parseFloat(totalSize) >= parseFloat(this.size ?? '0')) {
+        this.size = totalSize;
+      }
+      if (speed) {
+        this.speed = speed;
+      }
+      if (eta) {
+        this.eta = eta;
+      }
 
       if (percentage >= this.progress) {
         this.progress = percentage;
@@ -46,7 +65,15 @@ export class Downloader {
       // console.log(text);
     }
 
-    return { status: this.status, progress: this.progress };
+    return {
+      videoId: this.videoId,
+      active: true,
+      status: this.status,
+      progress: this.progress,
+      size: this.size,
+      speed: this.speed,
+      eta: this.eta
+    };
   }
 
   onError(text: string) {
@@ -57,11 +84,8 @@ export class Downloader {
     console.error('Download finished:', text);
   }
 
-  async download(
-    url: string,
-    progressCallback: ProgressCallback
-  ): Promise<void> {
-    const args = [url];
+  async download(progressCallback: ProgressCallback): Promise<void> {
+    const args = [this.url];
     await this.cmd.execute(args, (text: string) =>
       progressCallback(this.onOutput(text))
     );

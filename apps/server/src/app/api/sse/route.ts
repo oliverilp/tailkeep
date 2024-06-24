@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { progressEmitter } from '@/lib/bullmq';
-import { DownloadProgressType } from '@/server/models/progress';
+import { type DownloadProgressType } from '@/server/models/progress';
 
 export async function GET(req: NextRequest) {
   const stream = new ReadableStream({

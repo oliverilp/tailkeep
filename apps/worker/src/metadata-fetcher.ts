@@ -18,7 +18,7 @@ export class MetadataFetcher {
   private cmd: CommandExecutor;
   private json = '';
 
-  constructor() {
+  constructor(private url: string) {
     this.cmd = new CommandExecutor();
   }
 
@@ -26,8 +26,8 @@ export class MetadataFetcher {
     this.json += data;
   }
 
-  async fetch(url: string): Promise<Metadata> {
-    const args = ['-j', url];
+  async fetch(): Promise<Metadata> {
+    const args = ['-j', this.url];
     await this.cmd.execute(args, (text: string) => this.onOutput(text));
 
     const json = JSON.parse(this.json);

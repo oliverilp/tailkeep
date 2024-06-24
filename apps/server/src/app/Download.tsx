@@ -49,9 +49,9 @@ function Download(): React.JSX.Element {
         <h2>Add new video working</h2>
         {progress !== null && (
           <>
-            <div className="w-fit">Status: {progress?.status}</div>
+            <div className="w-fit">Status: {progress.status}</div>
             <div className="w-fit">
-              Progress: {Number(progress?.progress).toFixed(1)}%
+              Progress: {Number(progress.progress).toFixed(1)}%
             </div>
           </>
         )}

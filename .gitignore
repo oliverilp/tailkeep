@@ -56,8 +56,11 @@ next-env.d.ts
 /docker/postgres_data
 /docker/redis_data
 
-# video files
+# Youtube-DL video files
 *.webm
 *.mp4
 *.mov
 *.mkv
+*.part
+
+**/prisma/migrations
