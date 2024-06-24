@@ -14,7 +14,7 @@ function Download(): React.JSX.Element {
   const download = (): void => {
     // eslint-disable-next-line no-console -- ignore
     console.log('Adding video..');
-    void addToQueue('youtube.com');
+    void addToQueue('https://youtu.be/Ibjm2KHfymo');
   };
 
   useEffect(() => {
@@ -51,7 +51,7 @@ function Download(): React.JSX.Element {
           <>
             <div className="w-fit">Status: {progress?.status}</div>
             <div className="w-fit">
-              Progress: {Math.round(progress?.progress)}%
+              Progress: {Number(progress?.progress).toFixed(1)}%
             </div>
           </>
         )}

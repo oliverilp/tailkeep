@@ -9,10 +9,9 @@ export type DataCallback = (data: string) => void;
 export class CommandExecutor {
   private childProcess: ChildProcessWithoutNullStreams | null = null;
 
-  execute(url: string, onDataCallback: DataCallback): Promise<void> {
+  execute(args: string[], onDataCallback: DataCallback): Promise<void> {
     return new Promise((resolve, reject) => {
       const command: string = 'yt-dlp';
-      const args: string[] = [url];
       const options: SpawnOptionsWithoutStdio = {
         // cwd: '/workspace' // Optional: Set working directory
         // env: { ...process.env, CUSTOM_VAR: 'value' } // Optional: Set environment variables

@@ -10,17 +10,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+model Video {
+  id           Int             @id @default(autoincrement())
+  videoId      String
+  url          String
+  title        String
+  uploader     String
+  duration     String
+  thumbnailUrl String
+  description  String
+  viewCount    Int
+  commentCount Int
+  progressList VideoProgress[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model Task {
-  id    Int     @id @default(autoincrement())
-  title String
-  done  Boolean
-  order Int
+model VideoProgress {
+  id      Int     @id @default(autoincrement())
+  active  Boolean
+  status  String
+  size    String
+  speed   String
+  eta     String
+  video   Video   @relation(fields: [videoId], references: [id])
+  videoId Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

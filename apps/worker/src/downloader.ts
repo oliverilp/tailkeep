@@ -36,7 +36,7 @@ export class Downloader {
         downloadMatch;
       const percentage = parseFloat(progress);
 
-      console.log('match', fullMatch);
+      // console.log('match', fullMatch);
 
       if (percentage >= this.progress) {
         this.progress = percentage;
@@ -61,7 +61,8 @@ export class Downloader {
     url: string,
     progressCallback: ProgressCallback
   ): Promise<void> {
-    await this.cmd.execute(url, (text: string) =>
+    const args = [url];
+    await this.cmd.execute(args, (text: string) =>
       progressCallback(this.onOutput(text))
     );
   }

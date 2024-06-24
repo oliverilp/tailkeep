@@ -1,3 +1,4 @@
+import { Metadata } from '@/server/models/metadata';
 import {
   DownloadProgress,
   DownloadProgressType
@@ -10,22 +11,28 @@ const connection: ConnectionOptions = {
   port: 6379
 };
 
-// Create a new connection in every instance
-export const myQueue = new Queue('myqueue', { connection });
+export const metadataQueue = new Queue('metadata-queue', { connection });
+export const downloadQueue = new Queue('download-queue', { connection });
 export const progressEmitter = new EventEmitter();
 
-const queueEvents = new QueueEvents('myqueue', { connection });
-
-queueEvents.on(
+const downloadEvents = new QueueEvents('download-queue', { connection });
+downloadEvents.on(
   'progress',
   ({ jobId, data }: { jobId: string; data: number | object }) => {
-    // jobId received a progress event
-    // console.log('job progress:', data);
     const validationResult = DownloadProgress.safeParse(data);
     if (!validationResult.success) {
       return;
     }
     const download = validationResult.data;
     progressEmitter.emit<DownloadProgressType>('update', download);
+  }
+);
+
+const metadataEvents = new QueueEvents('metadata-queue', { connection });
+metadataEvents.on(
+  'progress',
+  ({ jobId, data }: { jobId: string; data: number | object }) => {
+    const metadata = Metadata.parse(data);
+    console.log('metadata update', metadata);
   }
 );
