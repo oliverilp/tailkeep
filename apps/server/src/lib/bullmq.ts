@@ -30,7 +30,7 @@ downloadEvents.on('completed', async ({ jobId }) => {
     return;
   }
 
-  const videoId = z.number().parse(job.returnvalue?.videoId);
+  const videoId = z.number().parse(job.returnvalue?.jobId);
   void completeProgress(videoId);
 });
 
