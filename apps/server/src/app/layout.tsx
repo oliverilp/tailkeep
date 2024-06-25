@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
+import Events from './Events';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body
         className={cn('bg-background font-sans antialiased', inter.className)}
       >
+        <Events />
         {children}
       </body>
     </html>
