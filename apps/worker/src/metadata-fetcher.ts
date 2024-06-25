@@ -1,11 +1,12 @@
 import { CommandExecutor } from './command-executor';
 
 export interface Metadata {
-  videoId: string;
+  youtubeId: string;
   url: string;
   title: string;
   uploader: string;
-  duration: string;
+  durationString: string;
+  duration: number;
   thumbnailUrl: string;
   description: string;
   viewCount: number;
@@ -32,11 +33,12 @@ export class MetadataFetcher {
 
     const json = JSON.parse(this.json);
     const output = {
-      videoId: json.id,
+      youtubeId: json.id,
       url: json.webpage_url,
       title: json.title,
       uploader: json.uploader,
-      duration: json.duration_string,
+      durationString: json.duration_string,
+      duration: json.duration,
       thumbnailUrl: json.thumbnail,
       description: json.description,
       viewCount: json.view_count,

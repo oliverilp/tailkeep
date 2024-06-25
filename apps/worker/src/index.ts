@@ -2,7 +2,7 @@ import { Worker, Job, type ConnectionOptions } from 'bullmq';
 import { Subject } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
 import { DownloadProgress, Downloader } from './downloader';
-import { Metadata, MetadataFetcher } from './metadata-fetcher';
+import { MetadataFetcher } from './metadata-fetcher';
 
 const connection: ConnectionOptions = {
   host: 'localhost',
@@ -15,14 +15,18 @@ const throttledProgress$ = subject.pipe(throttleTime(500));
 
 async function processDownload(job: Job) {
   const { videoId, url } = job.data;
+  if (job.id === undefined) {
+    console.error('Missing job id.');
+    return;
+  }
+  const id = parseInt(job.id);
 
   const onProgressCallback = (progress: DownloadProgress) => {
-    console.log('new update', new Date(), progress);
     void job.updateProgress(progress);
   };
   throttledProgress$.subscribe(onProgressCallback);
 
-  const downloader = new Downloader(videoId, url);
+  const downloader = new Downloader(videoId, id, url);
 
   await downloader.download((progress: DownloadProgress) => {
     subject.next(progress);

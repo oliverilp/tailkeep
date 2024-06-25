@@ -11,18 +11,18 @@ datasource db {
 }
 
 model Video {
-  id           Int             @id @default(autoincrement())
-  videoId      String // TODO: Rename to youtubeId
-  url          String
-  title        String
-  uploader     String
-  duration     String // TODO: Rename to durationString
-  // TODO: Add duration number in seconds
-  thumbnailUrl String
-  description  String
-  viewCount    Int
-  commentCount Int
-  progressList VideoProgress[]
+  id             Int             @id @default(autoincrement())
+  youtubeId      String
+  url            String
+  title          String
+  uploader       String
+  durationString String
+  duration       Int
+  thumbnailUrl   String
+  description    String
+  viewCount      Int
+  commentCount   Int
+  progressList   VideoProgress[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -30,14 +30,15 @@ model Video {
 
 model VideoProgress {
   id       Int     @id @default(autoincrement())
+  video    Video   @relation(fields: [videoId], references: [id])
+  videoId  Int
+  jobId    Int     @unique
   active   Boolean
   status   String?
   progress Float
   size     String?
   speed    String?
   eta      String?
-  video    Video   @relation(fields: [videoId], references: [id])
-  videoId  Int     @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

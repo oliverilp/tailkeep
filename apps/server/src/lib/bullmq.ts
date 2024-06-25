@@ -20,15 +20,13 @@ export const downloadQueue = new Queue('download-queue', { connection });
 export const progressEmitter = new EventEmitter();
 
 const downloadEvents = new QueueEvents('download-queue', { connection });
-downloadEvents.on(
-  'progress',
-  ({ data }: { jobId: string; data: number | object }) => {
-    const progress = DownloadProgress.parse(data);
-    progressEmitter.emit<DownloadProgressType>('update', progress);
+downloadEvents.on('progress', ({ data }) => {
+  const progress = DownloadProgress.parse(data);
+  progressEmitter.emit<DownloadProgressType>('update', progress);
 
-    void addProgress(progress);
-  }
-);
+  void addProgress(progress);
+});
+
 downloadEvents.on('completed', async ({ jobId }) => {
   const job = await Job.fromId(downloadQueue, jobId);
   if (!job) {
@@ -47,6 +45,5 @@ metadataEvents.on('completed', async ({ jobId }) => {
   }
 
   const metadata = Metadata.parse(job.returnvalue?.metadata);
-
   void addVideo(metadata);
 });

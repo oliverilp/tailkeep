@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const DownloadProgress = z.object({
   videoId: z.number(),
+  jobId: z.number(),
   active: z.boolean(),
   status: z.string().nullable(),
   progress: z.number(),

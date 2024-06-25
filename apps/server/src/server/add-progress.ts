@@ -9,7 +9,7 @@ export async function addProgress(
   try {
     await prisma.videoProgress.upsert({
       where: {
-        videoId: progress.videoId
+        jobId: progress.jobId
       },
       update: progress,
       create: progress
