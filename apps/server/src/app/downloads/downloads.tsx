@@ -1,31 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import {
-  File,
-  Home,
-  LineChart,
-  ListFilter,
-  MoreHorizontal,
-  CircleUser,
-  Tv,
-  Download,
-  Video,
-  PanelLeft,
-  PlusCircle,
-  Search,
-  Settings
-} from 'lucide-react';
+import { File, ListFilter, MoreHorizontal, PlusCircle } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator
-} from '@/components/ui/breadcrumb';
+
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -44,8 +22,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
   Table,
   TableBody,
@@ -55,12 +31,6 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider
-} from '@/components/ui/tooltip';
 
 function Downloads() {
   return (
@@ -69,10 +39,7 @@ function Downloads() {
         <TabsList>
           <TabsTrigger value="all">All</TabsTrigger>
           <TabsTrigger value="active">Active</TabsTrigger>
-          <TabsTrigger value="draft">Draft</TabsTrigger>
-          <TabsTrigger value="archived" className="hidden sm:flex">
-            Archived
-          </TabsTrigger>
+          <TabsTrigger value="draft">Finished</TabsTrigger>
         </TabsList>
         <div className="ml-auto flex items-center gap-2">
           <DropdownMenu>
@@ -394,7 +361,7 @@ function Downloads() {
             </Table>
           </CardContent>
           <CardFooter>
-            <div className="text-xs text-muted-foreground">
+            <div className="text-muted-foreground text-xs">
               Showing <strong>1-10</strong> of <strong>32</strong> downloads
             </div>
           </CardFooter>
