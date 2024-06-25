@@ -1,12 +1,10 @@
-'use server';
-
 import prisma from '@/lib/prisma';
 
-export async function completeProgress(videoId: number): Promise<string> {
+export async function completeProgress(jobId: number): Promise<string> {
   try {
     await prisma.videoProgress.update({
       where: {
-        videoId
+        jobId
       },
       data: {
         active: false,

@@ -2,11 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/Button';
-import { addToQueue } from '@/server/actions/add';
-import {
-  DownloadProgress,
-  DownloadProgressType
-} from '@/server/models/progress';
+import { addVideoAction } from '@/server/actions/add-video';
+import { DownloadProgress, DownloadProgressType } from '@/schemas/progress';
 
 function Download(): React.JSX.Element {
   const [progress, setProgress] = useState<DownloadProgressType | null>(null);
@@ -14,7 +11,8 @@ function Download(): React.JSX.Element {
   const download = (): void => {
     // eslint-disable-next-line no-console -- ignore
     console.log('Adding video..');
-    void addToQueue('https://youtu.be/Ibjm2KHfymo');
+    const url = 'https://youtu.be/Ibjm2KHfymo';
+    void addVideoAction({ url });
   };
 
   useEffect(() => {

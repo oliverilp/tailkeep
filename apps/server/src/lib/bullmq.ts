@@ -1,11 +1,8 @@
 import { addVideo } from '@/server/add-metadata';
 import { addProgress } from '@/server/add-progress';
 import { completeProgress } from '@/server/complete-progress';
-import { Metadata } from '@/server/models/metadata';
-import {
-  DownloadProgress,
-  DownloadProgressType
-} from '@/server/models/progress';
+import { Metadata } from '@/schemas/metadata';
+import { DownloadProgress, DownloadProgressType } from '@/schemas/progress';
 import { Queue, QueueEvents, type ConnectionOptions, Job } from 'bullmq';
 import EventEmitter from 'events';
 import { z } from 'zod';

@@ -34,7 +34,7 @@ async function processDownload(job: Job) {
 
   console.log('');
   console.log('Job "download" finished.');
-  return { videoId };
+  return { jobId: id };
 }
 
 async function processMetadata(job: Job) {

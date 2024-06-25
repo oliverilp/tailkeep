@@ -1,7 +1,5 @@
-'use server';
-
 import prisma from '@/lib/prisma';
-import { DownloadProgressType } from './models/progress';
+import { DownloadProgressType } from '@/schemas/progress';
 
 export async function addProgress(
   progress: DownloadProgressType

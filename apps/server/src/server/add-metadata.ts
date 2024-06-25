@@ -1,7 +1,5 @@
-'use server';
-
 import prisma from '@/lib/prisma';
-import { MetadataType } from './models/metadata';
+import { MetadataType } from '@/schemas/metadata';
 import { downloadQueue } from '@/lib/bullmq';
 
 export async function addVideo(metadata: MetadataType): Promise<string> {
