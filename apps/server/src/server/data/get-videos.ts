@@ -1,9 +1,9 @@
 import 'server-only';
 
 import prisma from '@/lib/prisma';
-import { MetadataDtoType } from '@/schemas/metadata';
+import { VideoDto } from '@/schemas/video';
 
-export async function getVideosAction(): Promise<MetadataDtoType[]> {
+export async function getVideosAction(): Promise<VideoDto[]> {
   const videos = await prisma.video.findMany();
 
   return videos;

@@ -1,9 +1,9 @@
-import { addVideo } from '@/server/add-metadata';
-import { addProgress } from '@/server/add-progress';
-import { completeProgress } from '@/server/complete-progress';
-import { Metadata } from '@/schemas/metadata';
-import { DownloadProgress, DownloadProgressType } from '@/schemas/progress';
 import { Queue, QueueEvents, type ConnectionOptions, Job } from 'bullmq';
+import { addVideo } from '@/server/data/add-metadata';
+import { addProgress } from '@/server/data/add-progress';
+import { completeProgress } from '@/server/data/complete-progress';
+import { videoSchema } from '@/schemas/video';
+import { downloadProgressSchema, DownloadProgress } from '@/schemas/progress';
 import EventEmitter from 'events';
 import { z } from 'zod';
 
@@ -18,8 +18,8 @@ export const progressEmitter = new EventEmitter();
 
 const downloadEvents = new QueueEvents('download-queue', { connection });
 downloadEvents.on('progress', ({ data }) => {
-  const progress = DownloadProgress.parse(data);
-  progressEmitter.emit<DownloadProgressType>('update', progress);
+  const progress = downloadProgressSchema.parse(data);
+  progressEmitter.emit<DownloadProgress>('update', progress);
 
   void addProgress(progress);
 });
@@ -41,6 +41,6 @@ metadataEvents.on('completed', async ({ jobId }) => {
     return;
   }
 
-  const metadata = Metadata.parse(job.returnvalue?.metadata);
+  const metadata = videoSchema.parse(job.returnvalue?.metadata);
   void addVideo(metadata);
 });

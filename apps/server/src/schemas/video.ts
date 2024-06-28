@@ -1,6 +1,6 @@
-import { number, z } from 'zod';
+import { z } from 'zod';
 
-export const Metadata = z.object({
+export const videoSchema = z.object({
   youtubeId: z.string(),
   url: z.string(),
   title: z.string(),
@@ -13,12 +13,12 @@ export const Metadata = z.object({
   commentCount: z.number()
 });
 
-export type MetadataType = z.infer<typeof Metadata>;
+export type Video = z.infer<typeof videoSchema>;
 
-export const MetadataDto = Metadata.extend({
+export const videoDtoSchema = videoSchema.extend({
   id: z.number(),
   createdAt: z.date(),
   updatedAt: z.date()
 });
 
-export type MetadataDtoType = z.infer<typeof MetadataDto>;
+export type VideoDto = z.infer<typeof videoDtoSchema>;

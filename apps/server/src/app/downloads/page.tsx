@@ -1,14 +1,12 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useAction } from 'next-safe-action/hooks';
 import { Button } from '@/components/ui/button';
 import { addVideoAction } from '@/server/actions/add-video';
-import { DownloadProgress, DownloadProgressType } from '@/schemas/progress';
-import { getVideosAction } from '@/server/data/get-videos';
+import { downloadProgressSchema, DownloadProgress } from '@/schemas/progress';
 
 function Download(): React.JSX.Element {
-  const [progress, setProgress] = useState<DownloadProgressType | null>(null);
+  const [progress, setProgress] = useState<DownloadProgress | null>(null);
   // const { execute, result } = useAction(getVideosAction, {
   //   onSuccess(data) {
   //     console.log('data', data);
@@ -33,7 +31,7 @@ function Download(): React.JSX.Element {
       console.log('onmessage', event.data);
 
       const parsedJSON = JSON.parse(event.data);
-      const validationResult = DownloadProgress.safeParse(parsedJSON);
+      const validationResult = downloadProgressSchema.safeParse(parsedJSON);
       if (!validationResult.success) {
         return;
       }

@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { MetadataDto } from './metadata';
+import { videoDtoSchema } from './video';
 
-export const DownloadProgress = z.object({
+export const downloadProgressSchema = z.object({
   videoId: z.number(),
   jobId: z.number(),
   active: z.boolean(),
@@ -12,13 +12,13 @@ export const DownloadProgress = z.object({
   eta: z.string().nullable()
 });
 
-export type DownloadProgressType = z.infer<typeof DownloadProgress>;
+export type DownloadProgress = z.infer<typeof downloadProgressSchema>;
 
-export const DownloadProgressDto = DownloadProgress.extend({
+export const downloadProgressDtoSchema = downloadProgressSchema.extend({
   id: z.number(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  video: MetadataDto
+  video: videoDtoSchema
 });
 
-export type DownloadProgressDtoType = z.infer<typeof DownloadProgressDto>;
+export type DownloadProgressDto = z.infer<typeof downloadProgressDtoSchema>;

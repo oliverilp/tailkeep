@@ -1,8 +1,10 @@
+import 'server-only';
+
 import prisma from '@/lib/prisma';
-import { MetadataType } from '@/schemas/metadata';
+import { Video } from '@/schemas/video';
 import { downloadQueue } from '@/lib/bullmq';
 
-export async function addVideo(metadata: MetadataType): Promise<string> {
+export async function addVideo(metadata: Video): Promise<string> {
   try {
     const video = await prisma.video.create({
       data: metadata

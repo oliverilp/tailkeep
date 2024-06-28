@@ -1,9 +1,9 @@
-import prisma from '@/lib/prisma';
-import { DownloadProgressType } from '@/schemas/progress';
+import 'server-only';
 
-export async function addProgress(
-  progress: DownloadProgressType
-): Promise<string> {
+import prisma from '@/lib/prisma';
+import { DownloadProgress } from '@/schemas/progress';
+
+export async function addProgress(progress: DownloadProgress): Promise<string> {
   try {
     await prisma.videoProgress.upsert({
       where: {

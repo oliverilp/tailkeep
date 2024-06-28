@@ -1,11 +1,9 @@
 import 'server-only';
 
 import prisma from '@/lib/prisma';
-import { DownloadProgressDtoType } from '@/schemas/progress';
+import { DownloadProgressDto } from '@/schemas/progress';
 
-export async function getProgressesAction(): Promise<
-  DownloadProgressDtoType[]
-> {
+export async function getProgressesAction(): Promise<DownloadProgressDto[]> {
   const progresses = await prisma.videoProgress.findMany({
     include: {
       video: true

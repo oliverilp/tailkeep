@@ -31,8 +31,7 @@ import {
 } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AddVideo from './add-video';
-import { MetadataDtoType } from '@/schemas/metadata';
-import { DownloadProgressDtoType } from '@/schemas/progress';
+import { DownloadProgressDto } from '@/schemas/progress';
 
 function formatDate(date: Date): string {
   const options: Intl.DateTimeFormatOptions = {
@@ -53,7 +52,7 @@ function formatStatus(status: string | null): string {
   return status.replace('[', '').replace(']', '').toLowerCase();
 }
 
-function Row({ item }: { item: DownloadProgressDtoType }) {
+function Row({ item }: { item: DownloadProgressDto }) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
@@ -96,7 +95,7 @@ function Row({ item }: { item: DownloadProgressDtoType }) {
 }
 
 interface Props {
-  items: DownloadProgressDtoType[];
+  items: DownloadProgressDto[];
 }
 
 function Downloads({ items }: Props) {
