@@ -5,16 +5,16 @@ import { useAction } from 'next-safe-action/hooks';
 import { Button } from '@/components/ui/button';
 import { addVideoAction } from '@/server/actions/add-video';
 import { DownloadProgress, DownloadProgressType } from '@/schemas/progress';
-import { getVideosAction } from '@/server/actions/get-videos';
+import { getVideosAction } from '@/server/data/get-videos';
 
 function Download(): React.JSX.Element {
   const [progress, setProgress] = useState<DownloadProgressType | null>(null);
-  const { execute, result } = useAction(getVideosAction, {
-    onSuccess(data) {
-      console.log('data', data);
-      console.log('result', result);
-    }
-  });
+  // const { execute, result } = useAction(getVideosAction, {
+  //   onSuccess(data) {
+  //     console.log('data', data);
+  //     console.log('result', result);
+  //   }
+  // });
 
   const download = async (): Promise<void> => {
     // eslint-disable-next-line no-console -- ignore
@@ -22,8 +22,8 @@ function Download(): React.JSX.Element {
     const url = 'https://youtu.be/Ibjm2KHfymo';
     void addVideoAction({ url });
 
-    console.log('result before', result);
-    execute();
+    // console.log('result before', result);
+    // execute();
   };
 
   useEffect(() => {
@@ -57,7 +57,7 @@ function Download(): React.JSX.Element {
       <div className="flex flex-col">
         <div>
           <div>Data:</div>
-          <div>{JSON.stringify(result)}</div>
+          {/* <div>{JSON.stringify(result)}</div> */}
         </div>
         <h2>Add new video working</h2>
         {progress !== null && (

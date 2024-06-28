@@ -1,6 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
-import { Home, Tv, Download, Video, Settings } from 'lucide-react';
+import {
+  Home,
+  Tv,
+  Download,
+  Video,
+  ListVideo,
+  GalleryVerticalEnd,
+  Settings
+} from 'lucide-react';
 
 import {
   Tooltip,
@@ -44,6 +52,20 @@ function Wide() {
               >
                 <Video className="h-5 w-5" />
                 <span className="hidden lg:inline-block">Videos</span>
+              </Link>
+              <Link
+                href="#"
+                className="text-muted-foreground hover:text-foreground flex items-center gap-3 rounded-lg px-3 py-2 text-base transition-all"
+              >
+                <ListVideo className="h-5 w-5" />
+                <span className="hidden lg:inline-block">Subscriptions</span>
+              </Link>
+              <Link
+                href="#"
+                className="text-muted-foreground hover:text-foreground flex items-center gap-3 rounded-lg px-3 py-2 text-base transition-all"
+              >
+                <GalleryVerticalEnd className="h-5 w-5" />
+                <span className="hidden lg:inline-block">Tasks</span>
               </Link>
             </nav>
             <nav className="grid items-start px-2 pb-5 text-sm font-medium lg:px-4">
@@ -108,6 +130,30 @@ function Narrow() {
             </Link>
           </TooltipTrigger>
           <TooltipContent side="right">Videos</TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link
+              href="#"
+              className="text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
+            >
+              <ListVideo className="h-5 w-5" />
+              <span className="sr-only">Subscriptions</span>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent side="right">Subscriptions</TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Link
+              href="#"
+              className="text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8"
+            >
+              <GalleryVerticalEnd className="h-5 w-5" />
+              <span className="sr-only">Tasks</span>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent side="right">Tasks</TooltipContent>
         </Tooltip>
       </nav>
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">

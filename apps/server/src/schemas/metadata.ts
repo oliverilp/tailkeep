@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { number, z } from 'zod';
 
 export const Metadata = z.object({
   youtubeId: z.string(),
@@ -14,3 +14,11 @@ export const Metadata = z.object({
 });
 
 export type MetadataType = z.infer<typeof Metadata>;
+
+export const MetadataDto = Metadata.extend({
+  id: z.number(),
+  createdAt: z.date(),
+  updatedAt: z.date()
+});
+
+export type MetadataDtoType = z.infer<typeof MetadataDto>;

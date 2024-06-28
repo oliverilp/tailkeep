@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { MetadataDto } from './metadata';
 
 export const DownloadProgress = z.object({
   videoId: z.number(),
@@ -12,3 +13,12 @@ export const DownloadProgress = z.object({
 });
 
 export type DownloadProgressType = z.infer<typeof DownloadProgress>;
+
+export const DownloadProgressDto = DownloadProgress.extend({
+  id: z.number(),
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  video: MetadataDto
+});
+
+export type DownloadProgressDtoType = z.infer<typeof DownloadProgressDto>;
