@@ -42,7 +42,7 @@ function formatDate(date: Date): string {
   const datePart = date.toLocaleDateString('en-gb', options);
   const timePart = date.toLocaleTimeString('en-gb');
 
-  return `${datePart} ${timePart}`;
+  return `${timePart} ${datePart}`;
 }
 
 function formatStatus(status: string | null): string {
@@ -169,7 +169,7 @@ function Downloads({ items }: Props) {
                     <TableHead className="hidden md:table-cell">ETA</TableHead>
                     <TableHead className="hidden md:table-cell">Size</TableHead>
                     <TableHead className="hidden md:table-cell">
-                      Created at
+                      Started at
                     </TableHead>
                     <TableHead>
                       <span className="sr-only">Actions</span>
