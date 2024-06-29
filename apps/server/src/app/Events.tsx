@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
+
 function Download(): React.JSX.Element {
   useEffect(() => {
     const eventSource = new EventSource('/api/sse');

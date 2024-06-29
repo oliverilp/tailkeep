@@ -1,11 +1,14 @@
+import EventEmitter from 'node:events';
 import { Queue, QueueEvents, type ConnectionOptions, Job } from 'bullmq';
+import { z } from 'zod';
 import { addVideo } from '@/server/data/add-metadata';
 import { addProgress } from '@/server/data/add-progress';
 import { completeProgress } from '@/server/data/complete-progress';
 import { videoSchema } from '@/schemas/video';
-import { downloadProgressSchema, DownloadProgress } from '@/schemas/progress';
-import EventEmitter from 'events';
-import { z } from 'zod';
+import {
+  downloadProgressSchema,
+  type DownloadProgress
+} from '@/schemas/progress';
 
 const connection: ConnectionOptions = {
   host: 'localhost',

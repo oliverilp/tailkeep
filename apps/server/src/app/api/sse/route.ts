@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { progressEmitter } from '@/lib/bullmq';
-import { type DownloadProgressType } from '@/server/models/progress';
+import type { DownloadProgress } from '@/schemas/progress';
 
-export async function GET(req: NextRequest) {
+export function GET() {
   const stream = new ReadableStream({
     start(controller) {
-      const update = (download: DownloadProgressType) => {
+      const update = (download: DownloadProgress) => {
         const json = JSON.stringify(download);
         const data = `data: ${json}\n\n`;
         try {

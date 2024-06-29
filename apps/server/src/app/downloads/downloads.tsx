@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
 import { File, ListFilter, MoreHorizontal, PlusCircle } from 'lucide-react';
-
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -30,8 +29,8 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import type { DownloadProgressDto } from '@/schemas/progress';
 import AddVideo from './add-video';
-import { DownloadProgressDto } from '@/schemas/progress';
 
 function formatDate(date: Date): string {
   const options: Intl.DateTimeFormatOptions = {
@@ -94,11 +93,11 @@ function Row({ item }: { item: DownloadProgressDto }) {
   );
 }
 
-interface Props {
+interface DownloadsProps {
   items: DownloadProgressDto[];
 }
 
-function Downloads({ items }: Props) {
+function Downloads({ items }: DownloadsProps) {
   return (
     <>
       <AddVideo />

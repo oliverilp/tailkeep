@@ -1,8 +1,8 @@
 'use server';
 
-import { metadataQueue } from '@/lib/bullmq';
 import { z } from 'zod';
 import { flattenValidationErrors } from 'next-safe-action';
+import { metadataQueue } from '@/lib/bullmq';
 import { actionClient } from '@/lib/safe-action';
 
 const UrlSchema = z.object({

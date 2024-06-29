@@ -1,7 +1,7 @@
 import 'server-only';
 
 import prisma from '@/lib/prisma';
-import { Video } from '@/schemas/video';
+import type { Video } from '@/schemas/video';
 import { downloadQueue } from '@/lib/bullmq';
 
 export async function addVideo(metadata: Video): Promise<string> {

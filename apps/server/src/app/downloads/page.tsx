@@ -3,7 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { addVideoAction } from '@/server/actions/add-video';
-import { downloadProgressSchema, DownloadProgress } from '@/schemas/progress';
+import {
+  downloadProgressSchema,
+  type DownloadProgress
+} from '@/schemas/progress';
 
 function Download(): React.JSX.Element {
   const [progress, setProgress] = useState<DownloadProgress | null>(null);
@@ -30,14 +33,13 @@ function Download(): React.JSX.Element {
     eventSource.onmessage = (event: MessageEvent<string>) => {
       console.log('onmessage', event.data);
 
-      const parsedJSON = JSON.parse(event.data);
+      const parsedJSON: unknown = JSON.parse(event.data);
       const validationResult = downloadProgressSchema.safeParse(parsedJSON);
       if (!validationResult.success) {
         return;
       }
 
-      const download = validationResult.data;
-      setProgress(download);
+      setProgress(validationResult.data);
     };
 
     eventSource.onerror = (error) => {

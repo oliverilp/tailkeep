@@ -50,6 +50,7 @@ next-env.d.ts
 
 # ide
 .vscode/*
+.idea
 
 # docker
 /docker/.env
