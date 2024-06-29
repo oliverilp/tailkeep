@@ -1,17 +1,9 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import {
-  Home,
-  Settings,
-  CircleUser,
-  Tv,
-  ListVideo,
-  GalleryVerticalEnd,
-  Download,
-  Video,
-  PanelLeft,
-  Search
-} from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { CircleUser, Tv, PanelLeft, Search } from 'lucide-react';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -31,8 +23,13 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { routes } from '@/lib/routes';
+import { cn } from '@/lib/utils';
+import NavIcon from '@/components/nav-icon';
 
 function header() {
+  const pathname = usePathname();
+
   return (
     <header className="bg-background sticky top-0 z-30 flex h-14 items-center gap-4 border-b px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Sheet>
@@ -45,54 +42,26 @@ function header() {
         <SheetContent side="left" className="sm:max-w-xs">
           <nav className="grid gap-6 text-lg font-medium">
             <Link
-              href="#"
+              href="/"
               className="bg-primary text-primary-foreground group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold md:text-base"
             >
               <Tv className="h-5 w-5 transition-all group-hover:scale-110" />
               <span className="sr-only">Tailkeep</span>
             </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-            >
-              <Home className="h-5 w-5" />
-              Dashboard
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-            >
-              <Download className="h-5 w-5" />
-              Downloads
-            </Link>
-            <Link
-              href="#"
-              className="text-foreground flex items-center gap-4 px-2.5"
-            >
-              <Video className="h-5 w-5" />
-              Videos
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-            >
-              <ListVideo className="h-5 w-5" />
-              Subscriptions
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-            >
-              <GalleryVerticalEnd className="h-5 w-5" />
-              Tasks
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5"
-            >
-              <Settings className="h-5 w-5" />
-              Settings
-            </Link>
+
+            {routes.map((link) => (
+              <Link
+                href={link.href}
+                key={link.href}
+                className={cn(
+                  'text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5',
+                  { 'text-foreground': pathname === link.href }
+                )}
+              >
+                <NavIcon name={link.name} />
+                <span>{link.name}</span>
+              </Link>
+            ))}
           </nav>
         </SheetContent>
       </Sheet>

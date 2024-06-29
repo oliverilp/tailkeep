@@ -4,6 +4,8 @@ import './globals.css';
 import React from 'react';
 import { cn } from '@/lib/utils';
 import Events from './Events';
+import Header from '@/components/header';
+import Sidenav from '@/components/sidenav';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,7 +25,13 @@ export default function RootLayout({
         className={cn('bg-background font-sans antialiased', inter.className)}
       >
         <Events />
-        {children}
+        <div className="bg-muted/40 flex min-h-screen w-full">
+          <Sidenav />
+          <div className="flex grow flex-col sm:gap-4 sm:py-4">
+            <Header />
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );
