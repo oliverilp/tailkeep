@@ -94,7 +94,7 @@ function NavLinkNarrow({ link }: { link: Route }) {
 
 function Narrow() {
   return (
-    <div className="inset-y-0 left-0 h-full w-14 flex-col justify-between sm:flex lg:hidden">
+    <div className="inset-y-0 left-0 min-h-screen w-14 flex-col justify-between sm:flex lg:hidden">
       <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
         <Link
           href="/"
