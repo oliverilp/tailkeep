@@ -35,7 +35,6 @@ function AddVideo() {
     console.log('Adding video', url);
     void addVideoAction({ url });
   }
-  /* assdasd HJello world*/
 
   return (
     <Form {...form}>

@@ -16,8 +16,8 @@ export type DownloadProgress = z.infer<typeof downloadProgressSchema>;
 
 export const downloadProgressDtoSchema = downloadProgressSchema.extend({
   id: z.number(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
   video: videoDtoSchema
 });
 

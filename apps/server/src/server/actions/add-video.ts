@@ -14,7 +14,10 @@ export const addVideoAction = actionClient
     handleValidationErrorsShape: (ve) => flattenValidationErrors(ve).fieldErrors
   })
   .action(async ({ parsedInput: { url } }) => {
-    await metadataQueue.add('metadata', { url });
+    const urlObject = new URL(url);
+    urlObject.search = '';
+
+    await metadataQueue.add('metadata', { url: urlObject.toString() });
 
     console.log('added to queue');
     console.log(

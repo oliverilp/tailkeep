@@ -6,9 +6,10 @@ import { addProgress } from '@/server/data/add-progress';
 import { completeProgress } from '@/server/data/complete-progress';
 import { videoSchema } from '@/schemas/video';
 import {
-  downloadProgressSchema,
-  type DownloadProgress
+  type DownloadProgressDto,
+  downloadProgressSchema
 } from '@/schemas/progress';
+import { getProgresses } from '@/server/data/get-progresses';
 
 const connection: ConnectionOptions = {
   host: 'localhost',
@@ -20,11 +21,13 @@ export const downloadQueue = new Queue('download-queue', { connection });
 export const progressEmitter = new EventEmitter();
 
 const downloadEvents = new QueueEvents('download-queue', { connection });
-downloadEvents.on('progress', ({ data }) => {
+downloadEvents.on('progress', async ({ data }) => {
   const progress = downloadProgressSchema.parse(data);
-  progressEmitter.emit<DownloadProgress>('update', progress);
+  await addProgress(progress);
 
-  void addProgress(progress);
+  const progressList = await getProgresses();
+
+  progressEmitter.emit<DownloadProgressDto[]>('update', progressList);
 });
 
 downloadEvents.on('completed', async ({ jobId }) => {

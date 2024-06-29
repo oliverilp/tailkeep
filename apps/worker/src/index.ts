@@ -40,6 +40,8 @@ async function processDownload(job: Job) {
 async function processMetadata(job: Job) {
   const { url } = job.data;
 
+  console.log('metadata got url', url);
+
   const metadataFetcher = new MetadataFetcher(url);
   const metadata = await metadataFetcher.fetch();
 

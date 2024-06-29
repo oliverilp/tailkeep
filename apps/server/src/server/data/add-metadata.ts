@@ -9,6 +9,7 @@ export async function addVideo(metadata: Video): Promise<string> {
     const video = await prisma.video.create({
       data: metadata
     });
+    console.log('Downloading video:', video.title);
 
     await downloadQueue.add('download', { videoId: video.id, url: video.url });
 

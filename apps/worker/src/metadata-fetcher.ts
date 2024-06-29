@@ -32,6 +32,7 @@ export class MetadataFetcher {
     await this.cmd.execute(args, (text: string) => this.onOutput(text));
 
     const json = JSON.parse(this.json);
+    console.log('metadata finished', json.title);
     const output = {
       youtubeId: json.id,
       url: json.webpage_url,
