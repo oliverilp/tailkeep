@@ -1,9 +1,7 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
-import { ArrowDownUp, MoreHorizontal } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { ArrowDownUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -17,7 +15,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
@@ -25,76 +22,16 @@ import {
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow
 } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type { DownloadProgressDto } from '@/schemas/progress';
+import DownloadsTableRow from './table-row';
 
 interface DownloadsTableProps {
   items: DownloadProgressDto[];
-}
-
-function formatDate(date: Date): string {
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  };
-  const datePart = date.toLocaleDateString('en-gb', options);
-  const timePart = date.toLocaleTimeString('en-gb');
-
-  return `${timePart} ${datePart}`;
-}
-
-function formatStatus(status: string | null): string {
-  if (status === null) {
-    return '';
-  }
-  return status.replace('[', '').replace(']', '').toLowerCase();
-}
-
-function Row({ item }: { item: DownloadProgressDto }) {
-  return (
-    <TableRow>
-      <TableCell className="hidden sm:table-cell">
-        <Image
-          alt="Product image"
-          className="aspect-video rounded-md object-cover"
-          height="1280"
-          width="720"
-          src={item.video.thumbnailUrl}
-        />
-      </TableCell>
-      <TableCell className="font-medium">{item.video.title}</TableCell>
-      <TableCell className="hidden lg:table-cell">
-        <Badge variant="outline">{formatStatus(item.status)}</Badge>
-      </TableCell>
-      <TableCell>{item.progress}%</TableCell>
-      <TableCell className="hidden md:table-cell">{item.speed}</TableCell>
-      <TableCell className="hidden md:table-cell">{item.eta}</TableCell>
-      <TableCell className="hidden md:table-cell">{item.size}</TableCell>
-      <TableCell className="hidden xl:table-cell">
-        {formatDate(new Date(item.createdAt))}
-      </TableCell>
-      <TableCell>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button aria-haspopup="true" size="icon" variant="ghost">
-              <MoreHorizontal className="h-4 w-4" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </TableCell>
-    </TableRow>
-  );
 }
 
 function DownloadsTable({ items }: DownloadsTableProps) {
@@ -126,18 +63,6 @@ function DownloadsTable({ items }: DownloadsTableProps) {
               <DropdownMenuCheckboxItem checked>Date</DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          {/* <Button size="sm" variant="outline" className="h-8 gap-1">
-            <File className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Export
-            </span>
-          </Button>
-          <Button size="sm" className="h-8 gap-1">
-            <PlusCircle className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Add Product
-            </span>
-          </Button> */}
         </div>
       </div>
       <TabsContent value="all">
@@ -145,7 +70,7 @@ function DownloadsTable({ items }: DownloadsTableProps) {
           <CardHeader>
             <CardTitle>Downloads</CardTitle>
             <CardDescription>
-              Manage your YouTube video downloads.
+              Manage your YouTube video download history.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -171,14 +96,15 @@ function DownloadsTable({ items }: DownloadsTableProps) {
               </TableHeader>
               <TableBody>
                 {items.map((item) => (
-                  <Row item={item} key={item.id} />
+                  <DownloadsTableRow item={item} key={item.id} />
                 ))}
               </TableBody>
             </Table>
           </CardContent>
           <CardFooter>
             <div className="text-muted-foreground text-xs">
-              Showing <strong>1-10</strong> of <strong>32</strong> downloads
+              Showing <strong>1-{items.length}</strong> of{' '}
+              <strong>{items.length}</strong> downloads
             </div>
           </CardFooter>
         </Card>

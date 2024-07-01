@@ -34,6 +34,7 @@ function AddVideo() {
   function onSubmit({ url }: FormType): void {
     console.log('Adding video', url);
     void addVideoAction({ url });
+    form.reset();
   }
 
   return (

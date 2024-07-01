@@ -10,6 +10,10 @@ export function useServerEvents(
   const [data, setData] = useState<DownloadProgressDto[]>(initialData);
 
   useEffect(() => {
+    setData(initialData);
+  }, [initialData]);
+
+  useEffect(() => {
     const eventSource = new EventSource('/api/sse');
 
     eventSource.onmessage = (event: MessageEvent<string>) => {

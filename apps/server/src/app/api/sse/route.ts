@@ -6,7 +6,7 @@ export function GET() {
   const stream = new ReadableStream({
     start(controller) {
       const update = (download: DownloadProgress) => {
-        // Unsubscribe to event listener when connection closed.
+        // Unsubscribe to event listener when connection is closed.
         if (!stream.locked) {
           progressEmitter.off('update', update);
           return;
