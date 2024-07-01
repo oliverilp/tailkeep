@@ -12,7 +12,7 @@ datasource db {
 
 model Video {
   id             Int             @id @default(autoincrement())
-  youtubeId      String
+  youtubeId      String          @unique
   url            String
   title          String
   uploader       String
