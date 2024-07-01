@@ -1,6 +1,5 @@
 import EventEmitter from 'node:events';
 import { Queue, QueueEvents, type ConnectionOptions, Job } from 'bullmq';
-import { z } from 'zod';
 import { addVideo } from '@/server/data/add-metadata';
 import { addProgress } from '@/server/data/add-progress';
 import { completeProgress } from '@/server/data/complete-progress';
@@ -12,8 +11,8 @@ import {
 import { getProgresses } from '@/server/data/get-progresses';
 
 const connection: ConnectionOptions = {
-  host: 'redis',
-  port: 6379
+  host: process.env.REDIS_URL ?? 'localhost',
+  port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379
 };
 
 export const metadataQueue = new Queue('metadata-queue', { connection });

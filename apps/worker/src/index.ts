@@ -1,12 +1,13 @@
+import 'dotenv/config';
 import { Worker, Job, type ConnectionOptions } from 'bullmq';
 import { Subject, merge } from 'rxjs';
-import { debounceTime, throttleTime } from 'rxjs/operators';
+import { throttleTime } from 'rxjs/operators';
 import { DownloadProgress, Downloader } from './downloader';
 import { MetadataFetcher } from './metadata-fetcher';
 
 const connection: ConnectionOptions = {
-  host: 'redis',
-  port: 6379
+  host: process.env.REDIS_URL ?? 'localhost',
+  port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379
 };
 
 const subject = new Subject<DownloadProgress>();
