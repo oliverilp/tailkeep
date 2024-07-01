@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { videoDtoSchema } from './video';
+import { videoDtoSchema } from '@/schemas/video';
 
 export const downloadProgressSchema = z.object({
   videoId: z.number(),

@@ -12,7 +12,7 @@ import {
 import { getProgresses } from '@/server/data/get-progresses';
 
 const connection: ConnectionOptions = {
-  host: 'localhost',
+  host: 'redis',
   port: 6379
 };
 
@@ -26,7 +26,6 @@ downloadEvents.on('progress', async ({ data }) => {
   await addProgress(progress);
 
   const progressList = await getProgresses();
-
   progressEmitter.emit<DownloadProgressDto[]>('update', progressList);
 });
 
@@ -36,8 +35,11 @@ downloadEvents.on('completed', async ({ jobId }) => {
     return;
   }
 
-  const videoId = z.number().parse(job.returnvalue?.jobId);
-  void completeProgress(videoId);
+  const progress = downloadProgressSchema.parse(job.returnvalue);
+  await completeProgress(progress);
+
+  const progressList = await getProgresses();
+  progressEmitter.emit<DownloadProgressDto[]>('update', progressList);
 });
 
 const metadataEvents = new QueueEvents('metadata-queue', { connection });

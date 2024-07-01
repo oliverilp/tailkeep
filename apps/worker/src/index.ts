@@ -1,19 +1,18 @@
 import { Worker, Job, type ConnectionOptions } from 'bullmq';
-import { Subject } from 'rxjs';
-import { throttleTime } from 'rxjs/operators';
+import { Subject, merge } from 'rxjs';
+import { debounceTime, throttleTime } from 'rxjs/operators';
 import { DownloadProgress, Downloader } from './downloader';
 import { MetadataFetcher } from './metadata-fetcher';
 
 const connection: ConnectionOptions = {
-  host: 'localhost',
+  host: 'redis',
   port: 6379
 };
 
 const subject = new Subject<DownloadProgress>();
+const throttled$ = subject.pipe(throttleTime(500));
 
-const throttledProgress$ = subject.pipe(throttleTime(500));
-
-async function processDownload(job: Job) {
+async function processDownload(job: Job): Promise<DownloadProgress | void> {
   const { videoId, url } = job.data;
   if (job.id === undefined) {
     console.error('Missing job id.');
@@ -23,18 +22,20 @@ async function processDownload(job: Job) {
 
   const onProgressCallback = (progress: DownloadProgress) => {
     void job.updateProgress(progress);
+    console.log(progress.progress, new Date());
   };
-  throttledProgress$.subscribe(onProgressCallback);
+
+  throttled$.subscribe(onProgressCallback);
 
   const downloader = new Downloader(videoId, id, url);
 
-  await downloader.download((progress: DownloadProgress) => {
+  const output = await downloader.download((progress: DownloadProgress) => {
     subject.next(progress);
   });
 
   console.log('');
   console.log('Job "download" finished.');
-  return { jobId: id };
+  return output;
 }
 
 async function processMetadata(job: Job) {

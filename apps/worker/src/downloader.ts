@@ -29,6 +29,19 @@ export class Downloader {
     this.cmd = new CommandExecutor();
   }
 
+  get downloadProgress(): DownloadProgress {
+    return {
+      videoId: this.videoId,
+      jobId: this.jobId,
+      active: true,
+      status: this.status,
+      progress: this.progress,
+      size: this.size,
+      speed: this.speed,
+      eta: this.eta
+    };
+  }
+
   onOutput(text: string): DownloadProgress {
     // Example line to parse:
     // [download]  12.6% of ~  65.76MiB at    3.14MiB/s ETA 00:15 (frag 3/42)
@@ -67,16 +80,7 @@ export class Downloader {
       // console.log(text);
     }
 
-    return {
-      videoId: this.videoId,
-      jobId: this.jobId,
-      active: true,
-      status: this.status,
-      progress: this.progress,
-      size: this.size,
-      speed: this.speed,
-      eta: this.eta
-    };
+    return this.downloadProgress;
   }
 
   onError(text: string) {
@@ -87,10 +91,14 @@ export class Downloader {
     console.error('Download finished:', text);
   }
 
-  async download(progressCallback: ProgressCallback): Promise<void> {
+  async download(
+    progressCallback: ProgressCallback
+  ): Promise<DownloadProgress> {
     const args = [this.url];
     await this.cmd.execute(args, (text: string) =>
       progressCallback(this.onOutput(text))
     );
+
+    return this.downloadProgress;
   }
 }
