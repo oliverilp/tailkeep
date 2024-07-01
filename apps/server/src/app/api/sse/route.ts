@@ -6,26 +6,25 @@ export function GET() {
   const stream = new ReadableStream({
     start(controller) {
       const update = (download: DownloadProgress) => {
+        // Unsubscribe to event listener when connection closed.
+        if (!stream.locked) {
+          progressEmitter.off('update', update);
+          return;
+        }
+
         const json = JSON.stringify(download);
         const data = `data: ${json}\n\n`;
-        try {
-          controller.enqueue(new TextEncoder().encode(data));
-        } catch (error) {
-          console.error('ReadableStream error for new event.');
-        }
+        controller.enqueue(new TextEncoder().encode(data));
       };
 
       progressEmitter.on('update', update);
-
-      return () => {
-        progressEmitter.off('update', update);
-      };
     }
   });
 
   return new NextResponse(stream, {
     headers: {
       'Content-Type': 'text/event-stream',
+      'Content-Encoding': 'none',
       'Cache-Control': 'no-cache',
       Connection: 'keep-alive'
     }
