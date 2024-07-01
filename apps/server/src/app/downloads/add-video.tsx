@@ -51,8 +51,8 @@ function AddVideo() {
                 <FormLabel>Video URL</FormLabel>
                 <FormControl>
                   <Input
-                    className="w-full md:w-[350px]"
-                    // placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                    className="w-full md:w-[350px] xl:w-[420px]"
+                    placeholder="https://www.youtube.com"
                     {...field}
                   />
                 </FormControl>

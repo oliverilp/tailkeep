@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { File, ListFilter, MoreHorizontal, PlusCircle } from 'lucide-react';
+import { ArrowDownUp, MoreHorizontal } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -69,14 +69,14 @@ function Row({ item }: { item: DownloadProgressDto }) {
         />
       </TableCell>
       <TableCell className="font-medium">{item.video.title}</TableCell>
-      <TableCell className="hidden md:table-cell">
+      <TableCell className="hidden lg:table-cell">
         <Badge variant="outline">{formatStatus(item.status)}</Badge>
       </TableCell>
       <TableCell>{item.progress}%</TableCell>
       <TableCell className="hidden md:table-cell">{item.speed}</TableCell>
       <TableCell className="hidden md:table-cell">{item.eta}</TableCell>
       <TableCell className="hidden md:table-cell">{item.size}</TableCell>
-      <TableCell className="hidden md:table-cell">
+      <TableCell className="hidden xl:table-cell">
         {formatDate(new Date(item.createdAt))}
       </TableCell>
       <TableCell>
@@ -89,7 +89,6 @@ function Row({ item }: { item: DownloadProgressDto }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
             <DropdownMenuItem>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -111,23 +110,23 @@ function DownloadsTable({ items }: DownloadsTableProps) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="h-8 gap-1">
-                <ListFilter className="h-3.5 w-3.5" />
+                <ArrowDownUp className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                  Filter
+                  Sort
                 </span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+              <DropdownMenuLabel>Sort by</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem checked>
-                Active
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>Archived</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem>Name</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem>Status</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem>Progress</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem>Size</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem checked>Date</DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button size="sm" variant="outline" className="h-8 gap-1">
+          {/* <Button size="sm" variant="outline" className="h-8 gap-1">
             <File className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
               Export
@@ -138,7 +137,7 @@ function DownloadsTable({ items }: DownloadsTableProps) {
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
               Add Product
             </span>
-          </Button>
+          </Button> */}
         </div>
       </div>
       <TabsContent value="all">
@@ -157,12 +156,12 @@ function DownloadsTable({ items }: DownloadsTableProps) {
                     <span className="sr-only">Image</span>
                   </TableHead>
                   <TableHead>Name</TableHead>
-                  <TableHead className="hidden md:table-cell">Status</TableHead>
+                  <TableHead className="hidden lg:table-cell">Status</TableHead>
                   <TableHead>Progress</TableHead>
                   <TableHead className="hidden md:table-cell">Speed</TableHead>
                   <TableHead className="hidden md:table-cell">ETA</TableHead>
                   <TableHead className="hidden md:table-cell">Size</TableHead>
-                  <TableHead className="hidden md:table-cell">
+                  <TableHead className="hidden xl:table-cell">
                     Started at
                   </TableHead>
                   <TableHead>

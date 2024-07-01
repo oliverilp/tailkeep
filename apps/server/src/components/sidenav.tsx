@@ -35,8 +35,8 @@ function NavLinkWide({ link }: { link: Route }) {
 
 function Wide() {
   return (
-    <div className="hidden min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid lg:grid-cols-[280px_1fr]">
-      <div className="fixed hidden w-[280px] md:block">
+    <div className="hidden min-h-screen w-full md:grid-cols-[220px_1fr] xl:grid xl:grid-cols-[280px_1fr]">
+      <div className="fixed hidden h-screen w-[280px] md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-medium">
@@ -94,7 +94,7 @@ function NavLinkNarrow({ link }: { link: Route }) {
 
 function Narrow() {
   return (
-    <div className="inset-y-0 left-0 min-h-screen w-14 lg:hidden">
+    <div className="inset-y-0 left-0 min-h-screen w-14 xl:hidden">
       <div className="fixed min-h-screen w-14 flex-col justify-between sm:flex">
         <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
           <Link
