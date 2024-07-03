@@ -3,7 +3,7 @@
 import React from 'react';
 import type { DownloadProgressDto } from '@/schemas/progress';
 import AddVideo from '@/app/downloads/add-video';
-import DownloadsTable from '@/app/downloads/table';
+import DownloadsTableLayout from '@/app/downloads/table/table-layout';
 import { useServerEvents } from '@/lib/use-server-events';
 
 interface DownloadsProps {
@@ -16,7 +16,7 @@ function Downloads({ items }: DownloadsProps) {
   return (
     <>
       <AddVideo />
-      <DownloadsTable items={progressList} />
+      <DownloadsTableLayout items={progressList} />
     </>
   );
 }

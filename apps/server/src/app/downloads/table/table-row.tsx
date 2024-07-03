@@ -34,10 +34,12 @@ function formatDate(date: Date): string {
     month: 'short',
     day: 'numeric'
   };
-  const datePart = date.toLocaleDateString('en-gb', options);
-  const timePart = date.toLocaleTimeString('en-gb');
+  const locale = navigator.language ?? 'en-GB';
 
-  return `${timePart} ${datePart}`;
+  const datePart = date.toLocaleDateString(locale, options);
+  const timePart = date.toLocaleTimeString(locale);
+
+  return `${datePart} ${timePart}`;
 }
 
 function formatStatus(status: string | null): string {
