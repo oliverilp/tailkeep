@@ -20,6 +20,14 @@ export default function RootLayout({
 }>): JSX.Element {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="icon"
+          href="/icon?<generated>"
+          type="image/png"
+          sizes="32x32"
+        />
+      </head>
       <body
         className={cn('bg-background font-sans antialiased', inter.className)}
       >

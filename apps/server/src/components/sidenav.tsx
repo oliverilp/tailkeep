@@ -40,7 +40,7 @@ function Wide() {
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-medium">
-              <div className="bg-primary text-primary-foreground group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full text-lg md:h-8 md:w-8 md:text-base">
+              <div className="bg-primary text-primary-foreground group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-xl text-lg md:h-8 md:w-8 md:text-base">
                 <Tv className="h-4 w-4 transition-all group-hover:scale-110" />
               </div>
               <span className="hidden text-lg lg:inline-block">Tailkeep</span>
@@ -99,7 +99,7 @@ function Narrow() {
         <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
           <Link
             href="/"
-            className="bg-primary text-primary-foreground group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold md:h-8 md:w-8 md:text-base"
+            className="bg-primary text-primary-foreground group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-xl text-lg font-semibold md:h-8 md:w-8 md:text-base"
           >
             <Tv className="h-4 w-4 transition-all group-hover:scale-110" />
             <span className="sr-only">Tailkeep</span>

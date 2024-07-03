@@ -43,7 +43,7 @@ function header() {
           <nav className="grid gap-6 text-lg font-medium">
             <Link
               href="/"
-              className="bg-primary text-primary-foreground group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold md:text-base"
+              className="bg-primary text-primary-foreground group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-xl text-lg font-semibold md:text-base"
             >
               <Tv className="h-5 w-5 transition-all group-hover:scale-110" />
               <span className="sr-only">Tailkeep</span>
