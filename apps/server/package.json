@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@dnd-kit/sortable": "^8.0.0",
     "@hookform/resolvers": "^3.5.0",
     "@prisma/client": "^5.14.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
@@ -37,6 +36,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.5",
     "react-resizable-panels": "^2.0.19",
+    "server-only": "^0.0.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.0",
@@ -64,7 +64,6 @@
     "prettier": "3.2.4",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "prisma": "^5.14.0",
-    "server-only": "^0.0.1",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5"
   }
