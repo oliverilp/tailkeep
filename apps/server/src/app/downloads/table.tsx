@@ -17,21 +17,61 @@ import {
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
+  DropdownMenuItem
 } from '@/components/ui/dropdown-menu';
 import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/table';
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from '@/components/ui/alert-dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { DataTable } from '@/components/ui/data-table';
+
 import type { DownloadProgressDto } from '@/schemas/progress';
-import DownloadsTableRow from './table-row';
+import { deleteDownloadAction } from '@/server/actions/delete-download';
+import { columns } from '@/app/downloads/table-columns';
 
 interface DownloadsTableProps {
   items: DownloadProgressDto[];
+}
+
+interface DeleteDialogProps {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  item: DownloadProgressDto;
+}
+
+function DeleteDialog({ open, setOpen, item }: DeleteDialogProps) {
+  const handleDelete = () => {
+    console.log('Deleting item', item.video.title);
+    void deleteDownloadAction({ id: item.id });
+  };
+
+  return (
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete download
+            progress for video "{item.video.title}".
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction variant={'destructive'} onClick={handleDelete}>
+            Delete
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
 }
 
 function DownloadsTable({ items }: DownloadsTableProps) {
@@ -74,32 +114,7 @@ function DownloadsTable({ items }: DownloadsTableProps) {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="hidden w-[100px] sm:table-cell">
-                    <span className="sr-only">Image</span>
-                  </TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead className="hidden lg:table-cell">Status</TableHead>
-                  <TableHead>Progress</TableHead>
-                  <TableHead className="hidden md:table-cell">Speed</TableHead>
-                  <TableHead className="hidden md:table-cell">ETA</TableHead>
-                  <TableHead className="hidden md:table-cell">Size</TableHead>
-                  <TableHead className="hidden xl:table-cell">
-                    Started at
-                  </TableHead>
-                  <TableHead>
-                    <span className="sr-only">Actions</span>
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {items.map((item) => (
-                  <DownloadsTableRow item={item} key={item.id} />
-                ))}
-              </TableBody>
-            </Table>
+            <DataTable columns={columns} data={items} />
           </CardContent>
           <CardFooter>
             <div className="text-muted-foreground text-xs">
