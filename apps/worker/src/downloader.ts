@@ -3,7 +3,6 @@ import { CommandExecutor } from './command-executor';
 export interface DownloadProgress {
   videoId: number;
   jobId: number;
-  active: boolean;
   status: string | null;
   progress: number;
   size: string | null;
@@ -33,7 +32,6 @@ export class Downloader {
     return {
       videoId: this.videoId,
       jobId: this.jobId,
-      active: true,
       status: this.status,
       progress: this.progress,
       size: this.size,
@@ -47,13 +45,13 @@ export class Downloader {
     // [download]  12.6% of ~  65.76MiB at    3.14MiB/s ETA 00:15 (frag 3/42)
     const downloadRegex =
       /\[(.*?)\]\s+(\d+\.?\d*%)\s+of\s+~?\s+(\d+\.\d+\w{1,3})\s+(?:in \d+:\d+(?::\d+)?\s+)?at\s+(\d+\.\d+\w{1,3}\/s)(?:\s+ETA\s+(?:(\d+:\d+(?::\d+)?)|Unknown))?/;
-    const categoryRegex = /^\[(.*?)\]/;
+    const categoryRegex = /^(?:\[)(.*?)(?:\])/;
 
     const downloadMatch = text.match(downloadRegex);
     const statusMatch = text.match(categoryRegex);
 
     if (statusMatch) {
-      const [value] = statusMatch;
+      const [_fullmatch, value] = statusMatch;
       this.status = value;
     }
 

@@ -44,7 +44,7 @@ function formatStatus(status: string | null): string {
   if (status === null) {
     return '';
   }
-  return status.replace('[', '').replace(']', '').toLowerCase();
+  return status.toLowerCase();
 }
 
 interface DeleteDialogProps {

@@ -13,9 +13,10 @@ export async function completeProgress(
       },
       data: {
         ...progress,
-        active: false,
+        status: 'done',
         speed: '0B/s',
-        eta: '00:00'
+        eta: '00:00',
+        completedAt: new Date()
       }
     });
 

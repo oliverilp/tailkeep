@@ -33,13 +33,13 @@ model VideoProgress {
   video    Video   @relation(fields: [videoId], references: [id])
   videoId  Int
   jobId    Int     @unique
-  active   Boolean
   status   String?
   progress Float
   size     String?
   speed    String?
   eta      String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  completedAt DateTime?
 }
