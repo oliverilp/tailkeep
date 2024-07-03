@@ -12,28 +12,28 @@ export type Route = {
 };
 
 export const routes: Route[] = [
-  {
-    name: 'Dashboard',
-    href: '/'
-  },
+  // {
+  //   name: 'Dashboard',
+  //   href: '/dashboard'
+  // },
   {
     name: 'Downloads',
-    href: '/downloads'
+    href: '/dashboard/downloads'
   },
   {
     name: 'Videos',
-    href: '/videos'
+    href: '/dashboard/videos'
   },
   {
     name: 'Subscriptions',
-    href: '/subscriptions'
+    href: '/dashboard/subscriptions'
   },
   {
     name: 'Tasks',
-    href: '/tasks'
+    href: '/dashboard/tasks'
   },
   {
     name: 'Settings',
-    href: '/settings'
+    href: '/dashboard/settings'
   }
 ];

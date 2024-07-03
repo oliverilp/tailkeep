@@ -15,17 +15,17 @@ import {
 import { Input } from '@/components/ui/input';
 import { addVideoAction } from '@/server/actions/add-video';
 
-const FormSchema = z.object({
+const formSchema = z.object({
   url: z.string().url({
     message: 'Must be a valid YouTube video URL.'
   })
 });
 
-type FormType = z.infer<typeof FormSchema>;
+type FormType = z.infer<typeof formSchema>;
 
 function AddVideo() {
   const form = useForm<FormType>({
-    resolver: zodResolver(FormSchema),
+    resolver: zodResolver(formSchema),
     defaultValues: {
       url: ''
     }

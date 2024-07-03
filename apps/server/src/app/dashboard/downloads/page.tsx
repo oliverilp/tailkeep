@@ -2,8 +2,8 @@
 
 import React from 'react';
 import type { DownloadProgressDto } from '@/schemas/progress';
-import AddVideo from '@/app/downloads/add-video';
-import DownloadsTableLayout from '@/app/downloads/table/table-layout';
+import AddVideo from '@/app/dashboard/downloads/add-video';
+import DownloadsTableLayout from '@/app/dashboard/downloads/table/table-layout';
 import { useServerEvents } from '@/lib/use-server-events';
 
 interface DownloadsProps {

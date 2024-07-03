@@ -3,8 +3,6 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import React from 'react';
 import { cn } from '@/lib/utils';
-import Header from '@/components/header';
-import Sidenav from '@/components/sidenav';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,13 +29,7 @@ export default function RootLayout({
       <body
         className={cn('bg-background font-sans antialiased', inter.className)}
       >
-        <div className="bg-muted/40 flex min-h-screen w-full">
-          <Sidenav />
-          <div className="flex grow flex-col sm:gap-4 sm:py-4">
-            <Header />
-            {children}
-          </div>
-        </div>
+        {children}
       </body>
     </html>
   );
