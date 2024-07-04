@@ -15,8 +15,12 @@ export const loginAction = actionClient
   })
   .action(async ({ parsedInput: { username, password } }) => {
     const existingUser = await getUser(username);
+
     if (!existingUser) {
-      console.log('no username');
+      // Returning immediately allows malicious actors to figure out valid usernames from response times,
+      // allowing them to only focus on guessing passwords in brute-force attacks.
+      // As a preventive measure, we will hash passwords even for invalid usernames.
+      await argon2.hash(password);
       return {
         error: 'Incorrect username or password'
       };
@@ -28,22 +32,10 @@ export const loginAction = actionClient
     );
 
     if (!isValidPassword) {
-      // NOTE:
-      // Returning immediately allows malicious actors to figure out valid usernames from response times,
-      // allowing them to only focus on guessing passwords in brute-force attacks.
-      // As a preventive measure, you may want to hash passwords even for invalid usernames.
-      // However, valid usernames can be already be revealed with the signup page among other methods.
-      // It will also be much more resource intensive.
-      // Since protecting against this is non-trivial,
-      // it is crucial your implementation is protected against brute-force attacks with login throttling, 2FA, etc.
-      // If usernames are public, you can outright tell the user that the username is invalid.
-      console.log('bad password');
       return {
         error: 'Incorrect username or password'
       };
     }
-
-    console.log('successfully signed in user');
 
     const session = await lucia.createSession(existingUser.id, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
