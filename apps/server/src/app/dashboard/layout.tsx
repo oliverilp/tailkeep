@@ -1,18 +1,17 @@
 import React from 'react';
+import { validateRequest } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 import Header from '@/components/header';
 import Sidenav from '@/components/sidenav';
-import { auth } from '@/auth';
 
 async function DashboardLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
-  console.log('session.user', session?.user);
-
-  if (!session) {
-    return <h1>You are not authorized.</h1>;
+  const { user } = await validateRequest();
+  if (!user) {
+    return redirect('/login');
   }
 
   return (

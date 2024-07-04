@@ -1,9 +1,18 @@
 import { NextResponse } from 'next/server';
+import { redirect } from 'next/navigation';
 import { progressEmitter } from '@/lib/bullmq';
 import type { DownloadProgress } from '@/schemas/progress';
+import { validateRequest } from '@/lib/auth';
 
 // API for server-sent events.
-export function GET() {
+export async function GET() {
+  const { user } = await validateRequest();
+  if (!user) {
+    return new Response('Unauthorized', {
+      status: 401
+    });
+  }
+
   const stream = new ReadableStream({
     start(controller) {
       const update = (download: DownloadProgress) => {

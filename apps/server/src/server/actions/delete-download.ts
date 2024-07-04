@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 import { flattenValidationErrors } from 'next-safe-action';
-import { actionClient } from '@/lib/safe-action';
+import { authActionClient } from '@/lib/safe-action';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 
@@ -10,7 +10,7 @@ const idSchema = z.object({
   id: z.number()
 });
 
-export const deleteDownloadAction = actionClient
+export const deleteDownloadAction = authActionClient
   .schema(idSchema, {
     handleValidationErrorsShape: (ve) => flattenValidationErrors(ve).fieldErrors
   })
