@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaAdapter } from '@lucia-auth/adapter-prisma';
 
 let prisma: PrismaClient;
 
@@ -15,3 +16,4 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 export default prisma;
+export const adapter = new PrismaAdapter(prisma.session, prisma.user);

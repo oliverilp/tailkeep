@@ -1,14 +1,25 @@
 'use server';
 
-import { actionClient } from '@/lib/safe-action';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-// import { signOut } from '@/auth';
+import { actionClient } from '@/lib/safe-action';
+import { lucia, validateRequest } from '@/lib/auth';
 
 export const logoutAction = actionClient.action(async ({}) => {
-  try {
-    // await signOut();
-    redirect('/dashboard/downloads');
-  } catch (error) {
-    return { message: 'Failed to sign out.' };
+  const { session } = await validateRequest();
+  if (!session) {
+    return {
+      error: 'Unauthorized'
+    };
   }
+
+  await lucia.invalidateSession(session.id);
+
+  const sessionCookie = lucia.createBlankSessionCookie();
+  cookies().set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes
+  );
+  return redirect('/login');
 });
