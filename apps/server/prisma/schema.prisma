@@ -43,3 +43,25 @@ model VideoProgress {
   updatedAt   DateTime  @updatedAt
   completedAt DateTime?
 }
+
+model User {
+  id       String @id @default(cuid())
+  username String @unique
+  password String
+
+  sessions Session[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+
+  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

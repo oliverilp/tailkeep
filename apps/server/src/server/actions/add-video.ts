@@ -3,14 +3,14 @@
 import { z } from 'zod';
 import { flattenValidationErrors } from 'next-safe-action';
 import { metadataQueue } from '@/lib/bullmq';
-import { actionClient } from '@/lib/safe-action';
+import { authActionClient } from '@/lib/safe-action';
 
-const UrlSchema = z.object({
+const urlSchema = z.object({
   url: z.string().url()
 });
 
-export const addVideoAction = actionClient
-  .schema(UrlSchema, {
+export const addVideoAction = authActionClient
+  .schema(urlSchema, {
     handleValidationErrorsShape: (ve) => flattenValidationErrors(ve).fieldErrors
   })
   .action(async ({ parsedInput: { url } }) => {

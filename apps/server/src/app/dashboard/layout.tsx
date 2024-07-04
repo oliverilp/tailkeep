@@ -1,12 +1,19 @@
 import React from 'react';
+import { validateRequest } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 import Header from '@/components/header';
 import Sidenav from '@/components/sidenav';
 
-function DashboardLayout({
+async function DashboardLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { user } = await validateRequest();
+  if (!user) {
+    return redirect('/login');
+  }
+
   return (
     <div className="bg-muted/40 flex min-h-screen w-full">
       <Sidenav />
