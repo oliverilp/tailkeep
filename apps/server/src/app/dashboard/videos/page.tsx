@@ -1,7 +1,12 @@
 import React from 'react';
+import { getVideos } from '@/server/data/get-videos';
+import { VideoDto } from '@/schemas/video';
+import VideoGrid from './video-grid';
 
-function Videos() {
-  return <div>Videos</div>;
+async function Videos() {
+  const videos: VideoDto[] = await getVideos();
+
+  return <VideoGrid videos={videos} />;
 }
 
 export default Videos;

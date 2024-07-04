@@ -91,7 +91,7 @@ function DownloadsTableRow({ item }: { item: DownloadProgressDto }) {
       <TableRow>
         <TableCell className="hidden sm:table-cell">
           <Image
-            alt="Product image"
+            alt="Video thumbnail"
             className="aspect-video rounded-md object-cover"
             height="1280"
             width="720"

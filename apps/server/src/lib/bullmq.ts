@@ -1,6 +1,6 @@
 import EventEmitter from 'node:events';
 import { Queue, QueueEvents, type ConnectionOptions, Job } from 'bullmq';
-import { addVideo } from '@/server/data/add-metadata';
+import { addVideo } from '@/server/data/add-video';
 import { addProgress } from '@/server/data/add-progress';
 import { completeProgress } from '@/server/data/complete-progress';
 import { videoSchema } from '@/schemas/video';
