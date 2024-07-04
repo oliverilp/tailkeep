@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
+import { Loader2 } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { UseFormReturn, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -26,15 +26,11 @@ import {
 } from '@/components/ui/form';
 import { CircleAlert } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
-import { loginAction, loginApi } from '@/server/actions/login';
+import { loginAction } from '@/server/actions/login';
+import { DisplayActionResponse } from '@/components/display-action-response';
 
 export function Login() {
-  // const { execute: login, result } = useAction(loginAction, {
-  //   onSuccess: ({ data, input }) => {
-  //     console.log('login success', data);
-  //     console.log(input);
-  //   }
-  // });
+  const { execute: login, result, isExecuting } = useAction(loginAction);
 
   const form = useForm<Login>({
     resolver: zodResolver(loginSchema),
@@ -46,8 +42,7 @@ export function Login() {
 
   function onSubmit(data: Login): void {
     console.log('Login username:', data.username);
-    // login(data);
-    loginApi(data);
+    login(data);
 
     form.reset();
   }
@@ -102,12 +97,17 @@ export function Login() {
               />
             </CardContent>
             <CardFooter className="flex flex-col gap-3">
-              <Button className="w-full">Sign in</Button>
-              <div className="text-destructive flex items-center gap-1 self-start">
-                <CircleAlert className="h-4 w-4" />
-                <div>Invalid credentials</div>
+              {isExecuting ? (
+                <Button className="w-full" disabled>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </Button>
+              ) : (
+                <Button className="w-full">Sign in</Button>
+              )}
+              <div className="self-start">
+                <DisplayActionResponse result={result} />
               </div>
-              {/* <div>{JSON.stringify(result)}</div> */}
             </CardFooter>
           </form>
         </Form>
