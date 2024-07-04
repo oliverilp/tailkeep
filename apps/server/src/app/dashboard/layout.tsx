@@ -1,12 +1,20 @@
 import React from 'react';
 import Header from '@/components/header';
 import Sidenav from '@/components/sidenav';
+import { auth } from '@/auth';
 
-function DashboardLayout({
+async function DashboardLayout({
   children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+  console.log('session.user', session?.user);
+
+  if (!session) {
+    return <h1>You are not authorized.</h1>;
+  }
+
   return (
     <div className="bg-muted/40 flex min-h-screen w-full">
       <Sidenav />

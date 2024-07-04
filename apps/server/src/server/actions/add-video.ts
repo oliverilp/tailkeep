@@ -5,12 +5,12 @@ import { flattenValidationErrors } from 'next-safe-action';
 import { metadataQueue } from '@/lib/bullmq';
 import { actionClient } from '@/lib/safe-action';
 
-const UrlSchema = z.object({
+const urlSchema = z.object({
   url: z.string().url()
 });
 
 export const addVideoAction = actionClient
-  .schema(UrlSchema, {
+  .schema(urlSchema, {
     handleValidationErrorsShape: (ve) => flattenValidationErrors(ve).fieldErrors
   })
   .action(async ({ parsedInput: { url } }) => {

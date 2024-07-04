@@ -6,12 +6,12 @@ import { actionClient } from '@/lib/safe-action';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 
-const UrlSchema = z.object({
+const idSchema = z.object({
   id: z.number()
 });
 
 export const deleteDownloadAction = actionClient
-  .schema(UrlSchema, {
+  .schema(idSchema, {
     handleValidationErrorsShape: (ve) => flattenValidationErrors(ve).fieldErrors
   })
   .action(async ({ parsedInput: { id } }) => {

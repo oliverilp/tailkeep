@@ -25,8 +25,17 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { CircleAlert } from 'lucide-react';
+import { useAction } from 'next-safe-action/hooks';
+import { loginAction, loginApi } from '@/server/actions/login';
 
 export function Login() {
+  // const { execute: login, result } = useAction(loginAction, {
+  //   onSuccess: ({ data, input }) => {
+  //     console.log('login success', data);
+  //     console.log(input);
+  //   }
+  // });
+
   const form = useForm<Login>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -37,6 +46,8 @@ export function Login() {
 
   function onSubmit(data: Login): void {
     console.log('Login username:', data.username);
+    // login(data);
+    loginApi(data);
 
     form.reset();
   }
@@ -92,10 +103,11 @@ export function Login() {
             </CardContent>
             <CardFooter className="flex flex-col gap-3">
               <Button className="w-full">Sign in</Button>
-              <div className="text-destructive flex hidden items-center gap-1 self-start">
+              <div className="text-destructive flex items-center gap-1 self-start">
                 <CircleAlert className="h-4 w-4" />
                 <div>Invalid credentials</div>
               </div>
+              {/* <div>{JSON.stringify(result)}</div> */}
             </CardFooter>
           </form>
         </Form>

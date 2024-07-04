@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { progressEmitter } from '@/lib/bullmq';
 import type { DownloadProgress } from '@/schemas/progress';
 
+// API for server-sent events.
 export function GET() {
   const stream = new ReadableStream({
     start(controller) {
