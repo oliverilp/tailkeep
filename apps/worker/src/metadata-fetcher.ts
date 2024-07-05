@@ -5,12 +5,15 @@ export interface Metadata {
   url: string;
   title: string;
   uploader: string;
+  channelId: string;
+  channelUrl: string;
   durationString: string;
   duration: number;
   thumbnailUrl: string;
   description: string;
   viewCount: number;
   commentCount: number;
+  filename: string;
 }
 
 export type ProgressCallback = (data: Metadata) => void;
@@ -38,12 +41,15 @@ export class MetadataFetcher {
       url: json.webpage_url,
       title: json.title,
       uploader: json.uploader,
+      channelId: json.channel_id,
+      channelUrl: json.channel_url,
       durationString: json.duration_string,
       duration: json.duration,
       thumbnailUrl: json.thumbnail,
       description: json.description,
       viewCount: json.view_count,
-      commentCount: json.comment_count
+      commentCount: json.comment_count,
+      filename: json.filename
     };
 
     return output;

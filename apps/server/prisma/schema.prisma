@@ -16,12 +16,15 @@ model Video {
   url            String
   title          String
   uploader       String
+  channelId      String
+  channelUrl     String
   durationString String
   duration       Int
   thumbnailUrl   String
   description    String
   viewCount      Int
   commentCount   Int
+  filename       String
   progressList   VideoProgress[]
 
   createdAt DateTime @default(now())
