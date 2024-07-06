@@ -13,7 +13,7 @@ function VideoGrid({ videos }: VideoGridProps) {
       <div className="flex flex-wrap gap-8">
         {videos?.map((video) => (
           <Link
-            href={`/dashboard/videos/${video.id}`}
+            href={`/dashboard/video/${video.id}`}
             key={video.id}
             className="flex min-h-32 w-[300px] cursor-pointer flex-col gap-3"
           >

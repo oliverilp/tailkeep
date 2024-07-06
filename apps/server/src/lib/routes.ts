@@ -22,7 +22,7 @@ export const routes: Route[] = [
   },
   {
     name: 'Videos',
-    href: '/dashboard/videos'
+    href: '/dashboard/video'
   },
   {
     name: 'Subscriptions',
