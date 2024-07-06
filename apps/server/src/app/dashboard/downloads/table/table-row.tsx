@@ -107,7 +107,7 @@ function DownloadsTableRow({ item }: { item: DownloadProgressDto }) {
         <TableCell className="hidden md:table-cell">{item.eta}</TableCell>
         <TableCell className="hidden md:table-cell">{item.size}</TableCell>
         <TableCell className="hidden xl:table-cell">
-          {formatDate(new Date(item.createdAt))}
+          {formatDate(item.createdAt)}
         </TableCell>
         <TableCell>
           <DropdownMenu>

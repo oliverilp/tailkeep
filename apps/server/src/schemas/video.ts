@@ -20,8 +20,8 @@ export type Video = z.infer<typeof videoSchema>;
 
 export const videoDtoSchema = videoSchema.extend({
   id: z.string(),
-  createdAt: z.string().or(z.date()),
-  updatedAt: z.string().or(z.date())
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date()
 });
 
 export type VideoDto = z.infer<typeof videoDtoSchema>;
