@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Video {
-  id             Int             @id @default(autoincrement())
+  id             String          @id @default(uuid())
   youtubeId      String          @unique
   url            String
   title          String
@@ -32,9 +32,9 @@ model Video {
 }
 
 model VideoProgress {
-  id       Int     @id @default(autoincrement())
+  id       String  @id @default(uuid())
   video    Video   @relation(fields: [videoId], references: [id])
-  videoId  Int
+  videoId  String
   jobId    Int     @unique
   status   String?
   progress Float
@@ -48,7 +48,7 @@ model VideoProgress {
 }
 
 model User {
-  id       String @id @default(cuid())
+  id       String @id @default(uuid())
   username String @unique
   password String
 
@@ -59,7 +59,7 @@ model User {
 }
 
 model Session {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   userId    String
   expiresAt DateTime
 

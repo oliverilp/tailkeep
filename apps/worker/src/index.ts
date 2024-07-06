@@ -23,7 +23,6 @@ async function processDownload(job: Job): Promise<DownloadProgress | void> {
 
   const onProgressCallback = (progress: DownloadProgress) => {
     void job.updateProgress(progress);
-    console.log(progress.progress, new Date());
   };
 
   throttled$.subscribe(onProgressCallback);

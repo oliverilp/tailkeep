@@ -5,18 +5,21 @@ export const videoSchema = z.object({
   url: z.string(),
   title: z.string(),
   uploader: z.string(),
+  channelId: z.string(),
+  channelUrl: z.string(),
   durationString: z.string(),
   duration: z.number(),
   thumbnailUrl: z.string(),
   description: z.string(),
   viewCount: z.number(),
-  commentCount: z.number()
+  commentCount: z.number(),
+  filename: z.string()
 });
 
 export type Video = z.infer<typeof videoSchema>;
 
 export const videoDtoSchema = videoSchema.extend({
-  id: z.number(),
+  id: z.string(),
   createdAt: z.string().or(z.date()),
   updatedAt: z.string().or(z.date())
 });

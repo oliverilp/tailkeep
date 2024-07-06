@@ -2,7 +2,7 @@ import { nullable, z } from 'zod';
 import { videoDtoSchema } from '@/schemas/video';
 
 export const downloadProgressSchema = z.object({
-  videoId: z.number(),
+  videoId: z.string(),
   jobId: z.number(),
   status: z.string().nullable(),
   progress: z.number(),
@@ -14,7 +14,7 @@ export const downloadProgressSchema = z.object({
 export type DownloadProgress = z.infer<typeof downloadProgressSchema>;
 
 export const downloadProgressDtoSchema = downloadProgressSchema.extend({
-  id: z.number(),
+  id: z.string(),
   createdAt: z.string(),
   updatedAt: z.string(),
   completedAt: z.string().nullable(),

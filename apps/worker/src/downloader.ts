@@ -1,7 +1,7 @@
 import { CommandExecutor } from './command-executor';
 
 export interface DownloadProgress {
-  videoId: number;
+  videoId: string;
   jobId: number;
   status: string | null;
   progress: number;
@@ -21,7 +21,7 @@ export class Downloader {
   private eta: string | null = null;
 
   constructor(
-    private videoId: number,
+    private videoId: string,
     private jobId: number,
     private url: string
   ) {
@@ -43,6 +43,8 @@ export class Downloader {
   onOutput(text: string): DownloadProgress {
     // Example line to parse:
     // [download]  12.6% of ~  65.76MiB at    3.14MiB/s ETA 00:15 (frag 3/42)
+    console.log(text);
+
     const downloadRegex =
       /\[(.*?)\]\s+(\d+\.?\d*%)\s+of\s+~?\s+(\d+\.\d+\w{1,3})\s+(?:in \d+:\d+(?::\d+)?\s+)?at\s+(\d+\.\d+\w{1,3}\/s)(?:\s+ETA\s+(?:(\d+:\d+(?::\d+)?)|Unknown))?/;
     const categoryRegex = /^(?:\[)(.*?)(?:\])/;
@@ -60,7 +62,11 @@ export class Downloader {
         downloadMatch;
       const percentage = parseFloat(progress);
 
-      if (totalSize && parseFloat(totalSize) >= parseFloat(this.size ?? '0')) {
+      if (
+        totalSize &&
+        (parseFloat(totalSize) >= parseFloat(this.size ?? '0') ||
+          eta === 'Unknown')
+      ) {
         this.size = totalSize;
       }
       if (speed) {

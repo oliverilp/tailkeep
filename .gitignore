@@ -56,6 +56,7 @@ next-env.d.ts
 /docker/.env
 /docker/postgres_data
 /docker/redis_data
+/docker/videos
 
 # Youtube-DL video files
 *.webm
@@ -63,5 +64,7 @@ next-env.d.ts
 *.mov
 *.mkv
 *.part
+*.ytdl
+video.json
 
 **/prisma/migrations
