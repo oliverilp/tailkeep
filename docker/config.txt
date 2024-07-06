@@ -1,16 +1,16 @@
 # Video
-#-f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio'
--f b # DEBUG
-#--merge-output-format mp4
+-f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio'
+#-f b # DEBUG
+--merge-output-format mp4
 
 # Metadata
 #--xattrs
-# --write-thumbnail
+--write-thumbnail
 
 #--embed-thumbnail
 #--embed-subs
 # --all-subs
 #--add-metadata
 
--o /dev/null # DEBUG
+#-o /dev/null # DEBUG
 

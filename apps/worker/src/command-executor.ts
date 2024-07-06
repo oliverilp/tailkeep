@@ -12,8 +12,9 @@ export class CommandExecutor {
   execute(args: string[], onDataCallback: DataCallback): Promise<void> {
     return new Promise((resolve, reject) => {
       const command: string = 'yt-dlp';
+      const workspace = process.env.VIDEOS_PATH;
       const options: SpawnOptionsWithoutStdio = {
-        // cwd: '/workspace' // Optional: Set working directory
+        cwd: workspace // Optional: Set working directory
         // env: { ...process.env, CUSTOM_VAR: 'value' } // Optional: Set environment variables
       };
       this.childProcess = spawn(command, args, options);
