@@ -15,15 +15,17 @@ function VideoGrid({ videos }: VideoGridProps) {
           <Link
             href={`/dashboard/video/${video.id}`}
             key={video.id}
-            className="flex min-h-32 w-[300px] cursor-pointer flex-col gap-3"
+            className="group flex min-h-32 w-80 cursor-pointer flex-col gap-3"
           >
-            <Image
-              alt="Video thumbnail"
-              className="aspect-video rounded-xl object-cover"
-              height="1280"
-              width="720"
-              src={video.thumbnailUrl}
-            />
+            <div className="aspect-video max-w-80 overflow-hidden rounded-xl">
+              <Image
+                alt="Video thumbnail"
+                className="scale-105 object-cover transition-transform group-hover:scale-100"
+                height="1280"
+                width="720"
+                src={video.thumbnailUrl}
+              />
+            </div>
             <div className="text- font-medium">{video.title}</div>
           </Link>
         ))}
