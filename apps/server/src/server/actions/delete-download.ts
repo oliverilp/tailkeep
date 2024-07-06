@@ -7,7 +7,7 @@ import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 
 const idSchema = z.object({
-  id: z.number()
+  id: z.string()
 });
 
 export const deleteDownloadAction = authActionClient

@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Delete, Link, MoreHorizontal } from 'lucide-react';
+import Link from 'next/link';
+import { Delete, Video, Link as LinkIcon, MoreHorizontal } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -119,10 +120,19 @@ function DownloadsTableRow({ item }: { item: DownloadProgressDto }) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <Link href={`/dashboard/video/${item.video.id}`} className="">
+                <DropdownMenuItem
+                  onClick={() => navigator.clipboard.writeText(item.video.url)}
+                >
+                  <Video className="mr-2 h-4 w-4" />
+                  <span>Open video</span>
+                </DropdownMenuItem>
+              </Link>
+
               <DropdownMenuItem
                 onClick={() => navigator.clipboard.writeText(item.video.url)}
               >
-                <Link className="mr-2 h-4 w-4" />
+                <LinkIcon className="mr-2 h-4 w-4" />
                 <span>Copy YouTube URL</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />

@@ -1,8 +1,8 @@
-import { VideoDto } from '@/schemas/video';
+import { VideoByIdDto } from '@/schemas/video-by-id';
 import React from 'react';
 
 interface PlayerProps {
-  video: VideoDto;
+  video: VideoByIdDto;
 }
 
 function Player({ video }: PlayerProps) {
