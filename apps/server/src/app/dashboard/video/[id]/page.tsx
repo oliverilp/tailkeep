@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import { getVideoById } from '@/server/data/get-video-by-id';
 import { z } from 'zod';
 import Player from './player';
@@ -26,13 +25,6 @@ async function VideoDetails({ params }: VideoDetailsProps) {
 
   return (
     <div className="flex max-w-5xl flex-col gap-4">
-      {/* <Image
-        alt="Video thumbnail"
-        className="aspect-video rounded-xl object-cover"
-        height="1280"
-        width="720"
-        src={video.thumbnailUrl}
-      /> */}
       <div>
         <Player video={video} />
       </div>
@@ -40,7 +32,11 @@ async function VideoDetails({ params }: VideoDetailsProps) {
         {video?.title}
       </h4>
       <div className="font-semibold">{video.uploader}</div>
-      <div className="pt-6">{video.description}</div>
+      <div className="pb-12 pt-6">
+        {video.description.split('\n').map((line) => (
+          <p>{line}</p>
+        ))}
+      </div>
     </div>
   );
 }
