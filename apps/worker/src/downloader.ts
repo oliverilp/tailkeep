@@ -46,7 +46,7 @@ export class Downloader {
     console.log(text);
 
     const downloadRegex =
-      /\[(.*?)\]\s+(\d+\.?\d*%)\s+of\s+~?\s+(\d+\.\d+\w{1,3})\s+(?:in \d+:\d+(?::\d+)?\s+)?at\s+(\d+\.\d+\w{1,3}\/s)(?:\s+ETA\s+(?:(\d+:\d+(?::\d+)?)|Unknown))?/;
+      /\[(.*?)\]\s+(\d+\.?\d*%)\s+of\s+~?\s+(\d+\.\d+\w{1,3})\s+(?:in \d+:\d+(?::\d+)?\s+)?at\s+(\d+\.\d+\w{1,3}\/s)(?:\s+ETA\s+(?:(\d+:\d+(?::\d+)?)|Unknown))?(?:\s+\(frag (\d+)\/\d+\))?/;
     const categoryRegex = /^(?:\[)(.*?)(?:\])/;
 
     const downloadMatch = text.match(downloadRegex);
@@ -58,10 +58,13 @@ export class Downloader {
     }
 
     if (downloadMatch) {
-      const [_fullMatch, _status, progress, totalSize, speed, eta] =
+      const [_fullMatch, status, progress, totalSize, speed, eta, frag] =
         downloadMatch;
       const percentage = parseFloat(progress);
 
+      if (status) {
+        this.status = status;
+      }
       if (
         totalSize &&
         (parseFloat(totalSize) >= parseFloat(this.size ?? '0') ||
@@ -76,7 +79,7 @@ export class Downloader {
         this.eta = eta;
       }
 
-      if (percentage >= this.progress) {
+      if (percentage >= this.progress && parseInt(frag) > 0) {
         this.progress = percentage;
       }
     } else {
