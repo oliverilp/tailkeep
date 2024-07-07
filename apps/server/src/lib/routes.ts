@@ -18,7 +18,7 @@ export const routes: Route[] = [
   // },
   {
     name: 'Downloads',
-    href: '/dashboard/downloads'
+    href: '/dashboard/download'
   },
   {
     name: 'Videos',

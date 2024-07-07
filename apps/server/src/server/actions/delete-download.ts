@@ -19,6 +19,6 @@ export const deleteDownloadAction = authActionClient
       where: { id }
     });
 
-    revalidatePath('/dashboard/downloads');
+    revalidatePath('/dashboard/download');
     return { message: 'Download deleted succesfully.' };
   });

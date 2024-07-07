@@ -17,7 +17,6 @@ export function useServerEvents(
     const eventSource = new EventSource('/api/sse');
 
     eventSource.onmessage = (event: MessageEvent<string>) => {
-      console.log('onmessage', event.data);
       const json: unknown = JSON.parse(event.data);
       const newData = downloadProgressDtoSchema.array().parse(json);
 

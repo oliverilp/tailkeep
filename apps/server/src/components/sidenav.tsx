@@ -23,7 +23,9 @@ function NavLinkWide({ link }: { link: Route }) {
       className={cn(
         'text-muted-foreground hover:text-foreground flex items-center gap-3 rounded-lg px-3 py-2 text-base transition-all',
         {
-          'bg-muted text-foreground font-semibold': pathname === link.href
+          'bg-muted text-foreground font-semibold': pathname.startsWith(
+            link.href
+          )
         }
       )}
     >
@@ -79,7 +81,7 @@ function NavLinkNarrow({ link }: { link: Route }) {
           className={cn(
             'text-muted-foreground hover:text-foreground flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8',
             {
-              'bg-accent text-accent-foreground': pathname === link.href
+              'bg-accent text-accent-foreground': pathname.startsWith(link.href)
             }
           )}
         >

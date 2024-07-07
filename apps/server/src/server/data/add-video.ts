@@ -3,6 +3,7 @@ import 'server-only';
 import prisma from '@/lib/prisma';
 import type { Video } from '@/schemas/video';
 import { downloadQueue } from '@/lib/bullmq';
+import { revalidatePath } from 'next/cache';
 
 export async function addVideo(metadata: Video): Promise<string> {
   try {
@@ -13,6 +14,7 @@ export async function addVideo(metadata: Video): Promise<string> {
 
     await downloadQueue.add('download', { videoId: video.id, url: video.url });
 
+    revalidatePath('/dashboard');
     return 'success';
   } catch (error) {
     return 'fail';

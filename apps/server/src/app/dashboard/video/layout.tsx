@@ -6,7 +6,7 @@ interface DownloadsLayoutProps {
 
 export function DownloadsLayout({ children }: DownloadsLayoutProps) {
   return (
-    <main className="grid items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+    <main className="grid h-full w-full items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
       {children}
     </main>
   );

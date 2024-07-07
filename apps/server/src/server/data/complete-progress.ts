@@ -2,6 +2,7 @@ import 'server-only';
 
 import prisma from '@/lib/prisma';
 import type { DownloadProgress } from '@/schemas/progress';
+import { revalidatePath } from 'next/cache';
 
 export async function completeProgress(
   progress: DownloadProgress
@@ -20,6 +21,7 @@ export async function completeProgress(
       }
     });
 
+    revalidatePath('/dashboard');
     return 'success';
   } catch (error) {
     return 'fail';

@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 function Dashboard() {
-  redirect('/dashboard/downloads');
+  redirect('/dashboard/download');
 }
 
 export default Dashboard;
