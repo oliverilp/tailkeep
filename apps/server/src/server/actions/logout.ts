@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import { actionClient } from '@/lib/safe-action';
 import { lucia, validateRequest } from '@/lib/auth';
 
-export const logoutAction = actionClient.action(async ({}) => {
+export const logoutAction = actionClient.action(async () => {
   const { session } = await validateRequest();
   if (!session) {
     return {

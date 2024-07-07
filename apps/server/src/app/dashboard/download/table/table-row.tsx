@@ -3,7 +3,12 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Delete, Video, Link as LinkIcon, MoreHorizontal } from 'lucide-react';
+import {
+  Delete,
+  SquarePlay,
+  Link as LinkIcon,
+  MoreHorizontal
+} from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -124,7 +129,7 @@ function DownloadsTableRow({ item }: { item: DownloadProgressDto }) {
                 <DropdownMenuItem
                   onClick={() => navigator.clipboard.writeText(item.video.url)}
                 >
-                  <Video className="mr-2 h-4 w-4" />
+                  <SquarePlay className="mr-2 h-4 w-4" />
                   <span>Open video</span>
                 </DropdownMenuItem>
               </Link>

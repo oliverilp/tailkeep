@@ -1,8 +1,10 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useAction } from 'next-safe-action/hooks';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -24,6 +26,8 @@ const formSchema = z.object({
 type FormType = z.infer<typeof formSchema>;
 
 function AddVideo() {
+  const { execute: addVideo, isExecuting } = useAction(addVideoAction);
+
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,7 +37,8 @@ function AddVideo() {
 
   function onSubmit({ url }: FormType): void {
     console.log('Adding video', url);
-    void addVideoAction({ url });
+    addVideo({ url });
+
     form.reset();
   }
 
@@ -62,7 +67,15 @@ function AddVideo() {
             )}
           />
         </div>
-        <Button type="submit">Add</Button>
+        {isExecuting ? (
+          <Button className="w-16" disabled>
+            <Loader2 className="h-4 w-4 animate-spin" />
+          </Button>
+        ) : (
+          <Button className="w-16" type="submit">
+            Add
+          </Button>
+        )}
       </form>
     </Form>
   );
