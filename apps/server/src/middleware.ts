@@ -18,10 +18,12 @@ export async function middleware(request: NextRequest) {
   if (error || !filepath) {
     return NextResponse.json({ error }, { status: response.status });
   }
+  const nginxHost = process.env.NGINX_HOST ?? 'localhost';
+  const nginxPort = process.env.NGINX_PORT ?? '8000';
 
   const url = request.nextUrl.clone();
-  url.hostname = 'localhost';
-  url.port = '8000';
+  url.hostname = nginxHost;
+  url.port = nginxPort;
   url.protocol = 'http';
   url.pathname = filepath;
 
