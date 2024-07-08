@@ -22,7 +22,7 @@
       "ppa": "false"
     }
   },
-  "postCreateCommand": "sudo chown node:node node_modules .next",
+  "postCreateCommand": "sudo bash /workspace/.devcontainer/post_create.sh",
   "postStartCommand": "yt-dlp -U",
 
   // Configure tool-specific properties.
