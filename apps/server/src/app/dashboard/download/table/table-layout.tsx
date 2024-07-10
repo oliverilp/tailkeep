@@ -17,17 +17,6 @@ import { DownloadProgressDto } from '@/schemas/progress';
 import DownloadsTable from './table';
 import TablePagination from './table-pagination';
 
-interface DownloadTabProps {
-  items: DownloadProgressDto[];
-  max: number;
-  limit: number;
-  page: number;
-}
-
-interface DownloadsTableLayoutProps {
-  items: DownloadProgressDto[];
-}
-
 const tabSchema = z.union([
   z.literal('all'),
   z.literal('active'),
@@ -39,8 +28,23 @@ const paramsSchema = z.object({
   progress: tabSchema.default('all'),
   page: z.coerce.number().positive().int().default(1)
 });
+type SearchParams = z.infer<typeof paramsSchema>;
 
-function DownloadsTab({ items, max, limit, page }: DownloadTabProps) {
+interface DownloadTabProps {
+  items: DownloadProgressDto[];
+  max: number;
+  limit: number;
+  searchParams: SearchParams;
+}
+
+interface DownloadsTableLayoutProps {
+  items: DownloadProgressDto[];
+}
+
+function DownloadsTab({ items, max, limit, searchParams }: DownloadTabProps) {
+  const start = limit * (searchParams.page - 1) + 1;
+  const end = Math.min(limit * searchParams.page, max);
+
   return (
     <Card x-chunk="dashboard-06-chunk-0">
       <CardHeader>
@@ -54,11 +58,20 @@ function DownloadsTab({ items, max, limit, page }: DownloadTabProps) {
       </CardContent>
       <CardFooter className="flex flex-col items-start justify-between gap-4 lg:flex-row lg:items-center">
         <div className="w-full sm:w-fit">
-          <TablePagination total={max} limit={limit} page={page} />
+          {max > limit && (
+            <TablePagination
+              total={max}
+              limit={limit}
+              searchParams={searchParams}
+            />
+          )}
         </div>
         <div className="text-muted-foreground   text-xs">
-          Showing <strong>{items.length}</strong> out of <strong>{max}</strong>{' '}
-          downloads
+          Showing{' '}
+          <strong>
+            {start}-{end}
+          </strong>{' '}
+          of <strong>{max}</strong> downloads
         </div>
       </CardFooter>
     </Card>
@@ -67,27 +80,28 @@ function DownloadsTab({ items, max, limit, page }: DownloadTabProps) {
 
 function DownloadsTableLayout({ items }: DownloadsTableLayoutProps) {
   const tabs: Tab[] = ['all', 'active', 'done'];
-  const limit = 2;
+  const limit = 5;
 
   const searchParams = useSearchParams();
   const queryEntries = Object.fromEntries(searchParams.entries());
 
   const validationResult = paramsSchema.safeParse(queryEntries);
-  const { progress, page } = validationResult.success
+  const { progress, page }: SearchParams = validationResult.success
     ? validationResult.data
     : { progress: 'all', page: 1 };
 
   const offset = (page - 1) * limit;
-  const filteredItems = items
-    .filter((item) => {
-      if (progress === 'all') {
-        return true;
-      }
-      return progress === 'active'
-        ? item.completedAt === null
-        : item.completedAt !== null;
-    })
-    .filter((_, index) => offset <= index && index < offset + limit);
+  const filteredByTabItems = items.filter((item) => {
+    if (progress === 'all') {
+      return true;
+    }
+    return progress === 'active'
+      ? item.completedAt === null
+      : item.completedAt !== null;
+  });
+  const filteredByPaginationItems = filteredByTabItems.filter(
+    (_, index) => offset <= index && index < offset + limit
+  );
 
   return (
     <Tabs defaultValue={progress}>
@@ -105,10 +119,10 @@ function DownloadsTableLayout({ items }: DownloadsTableLayoutProps) {
         </TabsList>
       </div>
       <DownloadsTab
-        items={filteredItems}
-        max={items.length}
+        items={filteredByPaginationItems}
+        max={filteredByTabItems.length}
         limit={limit}
-        page={page}
+        searchParams={{ progress, page }}
       />
     </Tabs>
   );

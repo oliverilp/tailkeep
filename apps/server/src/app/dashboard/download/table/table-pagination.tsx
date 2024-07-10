@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Pagination,
   PaginationContent,
@@ -12,7 +12,10 @@ import {
 interface TablePaginationProps {
   total: number;
   limit: number;
-  page: number;
+  searchParams: {
+    progress: string;
+    page: number;
+  };
 }
 
 type Page = number | string;
@@ -56,17 +59,10 @@ function getPages(pageCount: number, page: number): Page[] {
   return pages;
 }
 
-function TablePagination({ total, limit, page }: TablePaginationProps) {
-  // const [currentPage, setCurrentPage] = useState(1);
-  const currentPage = page;
+function TablePagination({ total, limit, searchParams }: TablePaginationProps) {
+  const { page, progress } = searchParams;
   const pageCount = Math.ceil(total / limit);
-  const pages = getPages(pageCount, currentPage);
-
-  const handlePageChange = (newPage: number) => {
-    if (newPage > 0 && newPage <= pageCount) {
-      // setCurrentPage(newPage);
-    }
-  };
+  const pages = getPages(pageCount, page);
 
   return (
     <div>
@@ -74,13 +70,12 @@ function TablePagination({ total, limit, page }: TablePaginationProps) {
         <PaginationContent className="w-full justify-between sm:w-fit lg:items-center lg:justify-normal">
           <PaginationItem>
             <PaginationPrevious
-              disabled={currentPage === 1}
-              href={`?page=${currentPage - 1}`}
-              // onClick={() => handlePageChange(currentPage - 1)}
+              disabled={page === 1}
+              href={`?progress=${progress}&page=${page - 1}`}
             />
           </PaginationItem>
 
-          <div className="sm:hidden">{`Page: ${currentPage}/${pageCount}`}</div>
+          <div className="sm:hidden">{`Page: ${page}/${pageCount}`}</div>
 
           {pages.map((item, index) => {
             if (item === '...') {
@@ -96,9 +91,8 @@ function TablePagination({ total, limit, page }: TablePaginationProps) {
               return (
                 <PaginationItem className="hidden sm:flex" key={item}>
                   <PaginationLink
-                    href={`?page=${item}`}
-                    isActive={item === currentPage}
-                    // onClick={() => handlePageChange(item as number)}
+                    href={`?progress=${progress}&page=${item}`}
+                    isActive={item === page}
                   >
                     {item}
                   </PaginationLink>
@@ -108,9 +102,8 @@ function TablePagination({ total, limit, page }: TablePaginationProps) {
           })}
           <PaginationItem>
             <PaginationNext
-              disabled={currentPage === pageCount}
-              href={`?page=${currentPage + 1}`}
-              // onClick={() => handlePageChange(currentPage + 1)}
+              disabled={page === pageCount}
+              href={`?progress=${progress}&page=${page + 1}`}
             />
           </PaginationItem>
         </PaginationContent>
