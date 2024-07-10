@@ -10,10 +10,12 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
+
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { capitalize } from '@/lib/utils';
 import { DownloadProgressDto } from '@/schemas/progress';
 import DownloadsTable from './table';
+import TablePagination from './table-pagination';
 
 interface DownloadTabProps {
   items: DownloadProgressDto[];
@@ -47,9 +49,12 @@ function DownloadsTab({ items, max }: DownloadTabProps) {
       <CardContent>
         <DownloadsTable items={items} />
       </CardContent>
-      <CardFooter>
-        <div className="text-muted-foreground text-xs">
-          Showing <strong>{items.length}</strong> of <strong>{max}</strong>{' '}
+      <CardFooter className="flex flex-col items-start justify-between gap-4 lg:flex-row lg:items-center">
+        <div className="w-full sm:w-fit">
+          <TablePagination total={11} />
+        </div>
+        <div className="text-muted-foreground   text-xs">
+          Showing <strong>{items.length}</strong> out of <strong>{max}</strong>{' '}
           downloads
         </div>
       </CardFooter>
