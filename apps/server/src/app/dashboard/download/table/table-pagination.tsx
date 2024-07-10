@@ -11,6 +11,8 @@ import {
 
 interface TablePaginationProps {
   total: number;
+  limit: number;
+  page: number;
 }
 
 type Page = number | string;
@@ -54,19 +56,17 @@ function getPages(pageCount: number, page: number): Page[] {
   return pages;
 }
 
-function TablePagination({ total }: TablePaginationProps) {
-  const [currentPage, setCurrentPage] = useState(5);
-  const limit = 1;
+function TablePagination({ total, limit, page }: TablePaginationProps) {
+  // const [currentPage, setCurrentPage] = useState(1);
+  const currentPage = page;
   const pageCount = Math.ceil(total / limit);
   const pages = getPages(pageCount, currentPage);
 
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= pageCount) {
-      setCurrentPage(newPage);
+      // setCurrentPage(newPage);
     }
   };
-
-  console.log('page number', pageCount);
 
   return (
     <div>
@@ -76,7 +76,7 @@ function TablePagination({ total }: TablePaginationProps) {
             <PaginationPrevious
               disabled={currentPage === 1}
               href={`?page=${currentPage - 1}`}
-              onClick={() => handlePageChange(currentPage - 1)}
+              // onClick={() => handlePageChange(currentPage - 1)}
             />
           </PaginationItem>
 
@@ -98,7 +98,7 @@ function TablePagination({ total }: TablePaginationProps) {
                   <PaginationLink
                     href={`?page=${item}`}
                     isActive={item === currentPage}
-                    onClick={() => handlePageChange(item as number)}
+                    // onClick={() => handlePageChange(item as number)}
                   >
                     {item}
                   </PaginationLink>
@@ -110,7 +110,7 @@ function TablePagination({ total }: TablePaginationProps) {
             <PaginationNext
               disabled={currentPage === pageCount}
               href={`?page=${currentPage + 1}`}
-              onClick={() => handlePageChange(currentPage + 1)}
+              // onClick={() => handlePageChange(currentPage + 1)}
             />
           </PaginationItem>
         </PaginationContent>

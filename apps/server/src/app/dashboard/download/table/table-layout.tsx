@@ -20,6 +20,8 @@ import TablePagination from './table-pagination';
 interface DownloadTabProps {
   items: DownloadProgressDto[];
   max: number;
+  limit: number;
+  page: number;
 }
 
 interface DownloadsTableLayoutProps {
@@ -34,10 +36,11 @@ const tabSchema = z.union([
 type Tab = z.infer<typeof tabSchema>;
 
 const paramsSchema = z.object({
-  progress: tabSchema.default('all')
+  progress: tabSchema.default('all'),
+  page: z.coerce.number().positive().int().default(1)
 });
 
-function DownloadsTab({ items, max }: DownloadTabProps) {
+function DownloadsTab({ items, max, limit, page }: DownloadTabProps) {
   return (
     <Card x-chunk="dashboard-06-chunk-0">
       <CardHeader>
@@ -51,7 +54,7 @@ function DownloadsTab({ items, max }: DownloadTabProps) {
       </CardContent>
       <CardFooter className="flex flex-col items-start justify-between gap-4 lg:flex-row lg:items-center">
         <div className="w-full sm:w-fit">
-          <TablePagination total={11} />
+          <TablePagination total={max} limit={limit} page={page} />
         </div>
         <div className="text-muted-foreground   text-xs">
           Showing <strong>{items.length}</strong> out of <strong>{max}</strong>{' '}
@@ -64,28 +67,30 @@ function DownloadsTab({ items, max }: DownloadTabProps) {
 
 function DownloadsTableLayout({ items }: DownloadsTableLayoutProps) {
   const tabs: Tab[] = ['all', 'active', 'done'];
+  const limit = 2;
 
   const searchParams = useSearchParams();
   const queryEntries = Object.fromEntries(searchParams.entries());
 
   const validationResult = paramsSchema.safeParse(queryEntries);
-  const validatedParams = validationResult.success
+  const { progress, page } = validationResult.success
     ? validationResult.data
-    : { progress: 'all' };
+    : { progress: 'all', page: 1 };
 
-  function filteredItems(tab: string): DownloadProgressDto[] {
-    return items.filter((item) => {
-      if (tab === 'all') {
+  const offset = (page - 1) * limit;
+  const filteredItems = items
+    .filter((item) => {
+      if (progress === 'all') {
         return true;
       }
-      return tab === 'active'
+      return progress === 'active'
         ? item.completedAt === null
         : item.completedAt !== null;
-    });
-  }
+    })
+    .filter((_, index) => offset <= index && index < offset + limit);
 
   return (
-    <Tabs defaultValue={validatedParams.progress}>
+    <Tabs defaultValue={progress}>
       <div className="mb-2 flex items-center">
         <TabsList>
           {tabs.map((tab) => (
@@ -100,8 +105,10 @@ function DownloadsTableLayout({ items }: DownloadsTableLayoutProps) {
         </TabsList>
       </div>
       <DownloadsTab
-        items={filteredItems(validatedParams.progress)}
+        items={filteredItems}
         max={items.length}
+        limit={limit}
+        page={page}
       />
     </Tabs>
   );
