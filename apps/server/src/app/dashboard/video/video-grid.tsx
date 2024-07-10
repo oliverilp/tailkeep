@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { VideoDto } from '@/schemas/video';
+import { cn } from '@/lib/utils';
 import NoVideos from './no-videos';
 
 interface VideoGridProps {
@@ -11,7 +12,11 @@ interface VideoGridProps {
 function VideoGrid({ videos }: VideoGridProps) {
   return (
     <div className="h-full w-full">
-      <div className="flex h-full w-full flex-wrap gap-8">
+      <div
+        className={cn('flex w-full flex-wrap gap-8', {
+          'h-full': !videos?.length
+        })}
+      >
         {videos?.length ? (
           <>
             {videos?.map((video) => (
@@ -20,12 +25,11 @@ function VideoGrid({ videos }: VideoGridProps) {
                 key={video.id}
                 className="group flex min-h-32 w-80 cursor-pointer flex-col gap-3"
               >
-                <div className="aspect-video max-w-80 overflow-hidden rounded-xl">
+                <div className="relative aspect-video max-w-80 overflow-hidden rounded-xl">
                   <Image
                     alt="Video thumbnail"
+                    fill={true}
                     className="scale-105 object-cover transition-transform group-hover:scale-100"
-                    height="1280"
-                    width="720"
                     src={video.thumbnailUrl}
                   />
                 </div>
