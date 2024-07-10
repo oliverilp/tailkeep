@@ -24,8 +24,7 @@ export class CommandExecutor {
       });
 
       this.childProcess.stderr.on('data', (data: Buffer) => {
-        reject(new Error(data.toString()));
-        this.childProcess = null; // Ensure childProcess is cleared
+        console.error('CMD Error:', data.toString());
       });
 
       this.childProcess.on('close', (code: number) => {

@@ -14,6 +14,7 @@ export async function completeProgress(
       },
       data: {
         ...progress,
+        progress: 100,
         status: 'done',
         speed: '0B/s',
         eta: '00:00',

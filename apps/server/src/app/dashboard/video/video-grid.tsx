@@ -31,6 +31,7 @@ function VideoGrid({ videos }: VideoGridProps) {
                     fill={true}
                     className="scale-105 object-cover transition-transform group-hover:scale-100"
                     src={video.thumbnailUrl}
+                    sizes="20rem"
                   />
                 </div>
                 <div className="text- font-medium">{video.title}</div>
