@@ -1,4 +1,5 @@
 import { CommandExecutor } from './command-executor';
+import { parseSize } from './filesize';
 
 export interface DownloadProgress {
   videoId: string;
@@ -62,10 +63,19 @@ export class Downloader {
         downloadMatch;
       const percentage = parseFloat(progress);
 
+      const sizeInBytes = parseSize(totalSize);
+      const lastSizeInBytes = parseSize(this.size ?? '0B');
+
+      const thresholdMultiplier = 2.5;
+      const isSizeWithinThreshold =
+        sizeInBytes >= lastSizeInBytes / thresholdMultiplier &&
+        sizeInBytes <= lastSizeInBytes * thresholdMultiplier;
+      const isValidSize = this.progress < 30 || isSizeWithinThreshold;
+
       if (status) {
         this.status = status;
       }
-      if (totalSize) {
+      if (isValidSize) {
         this.size = totalSize;
       }
       if (speed) {
