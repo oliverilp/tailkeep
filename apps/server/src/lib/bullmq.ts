@@ -1,14 +1,14 @@
 import EventEmitter from 'node:events';
 import { Queue, QueueEvents, type ConnectionOptions, Job } from 'bullmq';
 import { addVideo } from '@/server/data/add-video';
-import { addProgress } from '@/server/data/add-progress';
-import { completeProgress } from '@/server/data/complete-progress';
+import { addDownload } from '@/server/data/add-download';
+import { completeDownload } from '@/server/data/complete-download';
 import { videoSchema } from '@/schemas/video';
 import {
   type DownloadProgressDto,
   downloadProgressSchema
 } from '@/schemas/progress';
-import { getProgresses } from '@/server/data/get-progresses';
+import { getDownloads } from '@/server/data/get-downloads';
 
 const connection: ConnectionOptions = {
   host: process.env.REDIS_URL ?? 'localhost',
@@ -22,10 +22,10 @@ export const progressEmitter = new EventEmitter();
 const downloadEvents = new QueueEvents('download-queue', { connection });
 downloadEvents.on('progress', async ({ data }) => {
   const progress = downloadProgressSchema.parse(data);
-  await addProgress(progress);
+  await addDownload(progress);
 
-  const progressList = await getProgresses();
-  progressEmitter.emit<DownloadProgressDto[]>('update', progressList);
+  const downloads = await getDownloads();
+  progressEmitter.emit<DownloadProgressDto[]>('update', downloads);
 });
 
 downloadEvents.on('completed', async ({ jobId }) => {
@@ -35,10 +35,10 @@ downloadEvents.on('completed', async ({ jobId }) => {
   }
 
   const progress = downloadProgressSchema.parse(job.returnvalue);
-  await completeProgress(progress);
+  await completeDownload(progress);
 
-  const progressList = await getProgresses();
-  progressEmitter.emit<DownloadProgressDto[]>('update', progressList);
+  const downloads = await getDownloads();
+  progressEmitter.emit<DownloadProgressDto[]>('update', downloads);
 });
 
 const metadataEvents = new QueueEvents('metadata-queue', { connection });

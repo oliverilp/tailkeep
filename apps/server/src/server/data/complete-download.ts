@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma';
 import type { DownloadProgress } from '@/schemas/progress';
 import { revalidatePath } from 'next/cache';
 
-export async function completeProgress(
+export async function completeDownload(
   progress: DownloadProgress
 ): Promise<string> {
   try {

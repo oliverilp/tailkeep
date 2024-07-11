@@ -3,7 +3,7 @@ import 'server-only';
 import prisma from '@/lib/prisma';
 import { DownloadProgress } from '@/schemas/progress';
 
-export async function addProgress(progress: DownloadProgress): Promise<string> {
+export async function addDownload(progress: DownloadProgress): Promise<string> {
   try {
     await prisma.videoProgress.upsert({
       where: {

@@ -11,12 +11,12 @@ interface DownloadsProps {
 }
 
 function Downloads({ items }: DownloadsProps) {
-  const progressList = useServerEvents(items);
+  const downloads = useServerEvents(items);
 
   return (
     <>
       <AddVideo />
-      <DownloadsTableLayout items={progressList} />
+      <DownloadsTableLayout items={downloads} />
     </>
   );
 }
