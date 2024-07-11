@@ -14,7 +14,7 @@ const subject = new Subject<DownloadProgress>();
 const throttled$ = subject.pipe(throttleTime(500));
 
 async function processDownload(job: Job): Promise<DownloadProgress | void> {
-  const { videoId, url } = job.data;
+  const { videoId, url, filename } = job.data;
   if (job.id === undefined) {
     console.error('Missing job id.');
     return;
@@ -27,7 +27,7 @@ async function processDownload(job: Job): Promise<DownloadProgress | void> {
 
   throttled$.subscribe(onProgressCallback);
 
-  const downloader = new Downloader(videoId, id, url);
+  const downloader = new Downloader(videoId, id, url, filename);
 
   const output = await downloader.download((progress: DownloadProgress) => {
     subject.next(progress);

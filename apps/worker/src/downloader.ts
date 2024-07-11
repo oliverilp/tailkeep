@@ -1,5 +1,7 @@
+import { promises as fs } from 'fs';
+import * as path from 'path';
 import { CommandExecutor } from './command-executor';
-import { parseSize } from './filesize';
+import { formatSize, parseSize } from './filesize';
 
 export interface DownloadProgress {
   videoId: string;
@@ -24,7 +26,8 @@ export class Downloader {
   constructor(
     private videoId: string,
     private jobId: number,
-    private url: string
+    private url: string,
+    private filename: string
   ) {
     this.cmd = new CommandExecutor();
   }
@@ -111,6 +114,17 @@ export class Downloader {
     await this.cmd.execute(args, (text: string) =>
       progressCallback(this.onOutput(text))
     );
+
+    try {
+      const filePath = path.join(
+        process.env.VIDEOS_PATH ?? '/videos',
+        this.filename
+      );
+      const stats = await fs.stat(filePath);
+      this.size = formatSize(stats.size);
+    } catch (error) {
+      console.error('Error getting file size', error);
+    }
 
     return this.downloadProgress;
   }

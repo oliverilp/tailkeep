@@ -59,5 +59,5 @@ export function formatSize(bytes: number): string {
     }
   }
 
-  return `${value.toFixed(2)} ${unit}`;
+  return `${value.toFixed(2)}${unit}`;
 }

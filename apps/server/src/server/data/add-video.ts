@@ -12,7 +12,11 @@ export async function addVideo(metadata: Video): Promise<string> {
     });
     console.log('Downloading video:', video.title);
 
-    await downloadQueue.add('download', { videoId: video.id, url: video.url });
+    await downloadQueue.add('download', {
+      videoId: video.id,
+      url: video.url,
+      filename: video.filename
+    });
 
     revalidatePath('/dashboard');
     return 'success';
