@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Loader2 } from 'lucide-react';
+import { CircleAlert, Loader2 } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
@@ -23,6 +23,7 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useAction } from 'next-safe-action/hooks';
 import {
   ChangePassword,
@@ -31,7 +32,11 @@ import {
 import { DisplayActionResponse } from '@/components/display-action-response';
 import { changePasswordAction } from '@/server/actions/change.password';
 
-function Settings() {
+interface SettingsProps {
+  isDemo: boolean;
+}
+
+function Settings({ isDemo }: SettingsProps) {
   const {
     execute: changePassword,
     result,
@@ -81,6 +86,18 @@ function Settings() {
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="grid gap-4">
+                      {isDemo && (
+                        <Alert>
+                          <CircleAlert className="h-4 min-h-4 w-4 min-w-4" />
+                          <AlertTitle className="font-medium">
+                            App is running in demo environment!
+                          </AlertTitle>
+                          <AlertDescription>
+                            Editing account password is disabled.
+                          </AlertDescription>
+                        </Alert>
+                      )}
+
                       <FormField
                         control={form.control}
                         name="oldPassword"
@@ -91,6 +108,7 @@ function Settings() {
                               <Input
                                 placeholder="Enter your old password"
                                 type="password"
+                                disabled={isDemo}
                                 {...field}
                               />
                             </FormControl>
@@ -109,6 +127,7 @@ function Settings() {
                               <Input
                                 placeholder="Enter your new password"
                                 type="password"
+                                disabled={isDemo}
                                 {...field}
                               />
                             </FormControl>
@@ -127,6 +146,7 @@ function Settings() {
                               <Input
                                 placeholder="Confirm your password"
                                 type="password"
+                                disabled={isDemo}
                                 {...field}
                               />
                             </FormControl>
@@ -144,7 +164,11 @@ function Settings() {
                           <Loader2 className="h-4 w-4 animate-spin" />
                         </Button>
                       ) : (
-                        <Button className="w-16" type="submit">
+                        <Button
+                          className="w-16"
+                          type="submit"
+                          disabled={isDemo}
+                        >
                           Save
                         </Button>
                       )}

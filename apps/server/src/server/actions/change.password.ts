@@ -16,6 +16,11 @@ export const changePasswordAction = authActionClient
     async ({
       parsedInput: { oldPassword, newPassword, confirmNewPassword }
     }) => {
+      const isDemo = process.env.DEMO_MODE === 'true';
+      if (isDemo) {
+        return { error: 'Editing password is disabled in demo environment.' };
+      }
+
       const { user: authUser } = await validateRequest();
       if (!authUser) {
         return { error: 'Unauthorized.' };
