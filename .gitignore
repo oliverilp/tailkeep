@@ -58,6 +58,7 @@ next-env.d.ts
 /docker/redis_data
 /docker/videos
 **/cf_api_token.txt
+**/acme.json
 
 # Youtube-DL video files
 *.webm
