@@ -19,6 +19,20 @@ services:
       - db
       - redis
     restart: unless-stopped
+  worker:
+    container_name: tailkeep-worker
+    image: tailkeep-worker:latest
+    environment:
+      - REDIS_URL=${REDIS_URL}
+      - REDIS_PORT=${REDIS_PORT}
+      - VIDEOS_PATH=${VIDEOS_PATH}
+    volumes:
+      - ./videos:/videos:ro
+    depends_on:
+      - nginx
+      - db
+      - redis
+    restart: unless-stopped
   nginx:
     container_name: tailkeep-nginx
     image: nginx

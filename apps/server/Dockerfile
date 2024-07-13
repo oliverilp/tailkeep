@@ -1,9 +1,7 @@
 # FROM node:20-alpine AS base
 FROM node:20-bookworm-slim AS base
 
-RUN apt-get update -y && \
-    apt-get upgrade -y && \
-    apt-get install -y build-essential g++ git make python3
+RUN apt-get update -y && apt-get upgrade -y 
 
 # Install Prisma Client
 COPY prisma ./
@@ -15,6 +13,7 @@ FROM base AS deps
 WORKDIR /app
 
 # Install dependencies 
+RUN apt-get install -y build-essential g++ git make python3
 COPY package.json pnpm-lock.yaml ./
 RUN corepack enable pnpm && pnpm i --frozen-lockfile
 
