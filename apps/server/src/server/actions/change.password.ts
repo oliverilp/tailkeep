@@ -39,6 +39,12 @@ export const changePasswordAction = authActionClient
         };
       }
 
+      if (newPassword === oldPassword) {
+        return {
+          error: 'Your new password must be different from the old password.'
+        };
+      }
+
       const hash = await argon2.hash(newPassword);
       await prisma.user.update({
         data: {
