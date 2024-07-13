@@ -3,7 +3,7 @@ export type RouteName =
   | 'Downloads'
   | 'Videos'
   | 'Subscriptions'
-  | 'Tasks'
+  | 'Logs'
   | 'Settings';
 
 export type Route = {
@@ -29,8 +29,8 @@ export const routes: Route[] = [
     href: '/dashboard/subscriptions'
   },
   {
-    name: 'Tasks',
-    href: '/dashboard/tasks'
+    name: 'Logs',
+    href: '/dashboard/logs'
   },
   {
     name: 'Settings',

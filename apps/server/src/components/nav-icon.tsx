@@ -4,6 +4,7 @@ import {
   Settings,
   ListVideo,
   GalleryVerticalEnd,
+  FileClock,
   Download,
   SquarePlay
 } from 'lucide-react';
@@ -20,7 +21,7 @@ function NavIcon({ name }: NavProps) {
     Downloads: <Download className="h-5 w-5" />,
     Videos: <SquarePlay className="h-5 w-5" />,
     Subscriptions: <ListVideo className="h-5 w-5" />,
-    Tasks: <GalleryVerticalEnd className="h-5 w-5" />,
+    Logs: <FileClock className="h-5 w-5" />,
     Settings: <Settings className="h-5 w-5" />
   };
 
