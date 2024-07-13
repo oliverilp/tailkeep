@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma';
 import type { DownloadProgressDto } from '@/schemas/progress';
 
 export async function getDownloads(): Promise<DownloadProgressDto[]> {
-  return await prisma.videoProgress.findMany({
+  return prisma.videoProgress.findMany({
     include: {
       video: true
     },

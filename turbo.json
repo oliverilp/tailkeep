@@ -1,11 +1,22 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "DATABASE_URL",
+    "REDIS_URL",
+    "REDIS_PORT",
+    "VIDEOS_PATH",
+    "NGINX_HOST",
+    "NGINX_PORT",
+    "DEMO_MODE",
+    "NODE_ENV"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
+    "start": {},
     "lint": {},
     "type-check": {},
     "dev": {

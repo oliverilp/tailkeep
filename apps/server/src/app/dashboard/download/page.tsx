@@ -1,24 +1,17 @@
-'use client';
+import { getDownloads } from '@/server/data/get-downloads';
+import NoSsrWrapper from '@/components/no-ssr-wrapper';
+import Downloads from './downloads';
 
-import React from 'react';
-import type { DownloadProgressDto } from '@/schemas/progress';
-import AddVideo from '@/app/dashboard/download/add-video';
-import DownloadsTableLayout from '@/app/dashboard/download/table/table-layout';
-import { useServerEvents } from '@/lib/use-server-events';
-
-interface DownloadsProps {
-  items: DownloadProgressDto[];
-}
-
-function Downloads({ items }: DownloadsProps) {
-  const downloads = useServerEvents(items);
+async function DownloadsPage() {
+  const downloads = await getDownloads();
 
   return (
-    <>
-      <AddVideo />
-      <DownloadsTableLayout items={downloads} />
-    </>
+    <main className="grid items-start gap-4 p-4 sm:px-8 sm:py-0 md:gap-8">
+      <NoSsrWrapper>
+        <Downloads items={downloads} />
+      </NoSsrWrapper>
+    </main>
   );
 }
 
-export default Downloads;
+export default DownloadsPage;

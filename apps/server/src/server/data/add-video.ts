@@ -1,9 +1,9 @@
 import 'server-only';
 
+import { revalidatePath } from 'next/cache';
 import prisma from '@/lib/prisma';
 import type { Video } from '@/schemas/video';
 import { downloadQueue } from '@/lib/bullmq';
-import { revalidatePath } from 'next/cache';
 
 export async function addVideo(metadata: Video): Promise<string> {
   try {

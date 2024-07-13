@@ -65,6 +65,14 @@ module.exports = {
     'import/extensions': ['warn', 'never'],
     'react/jsx-sort-props': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    'unicorn/filename-case': 'off'
+    'unicorn/filename-case': 'off',
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: {
+          attributes: false
+        }
+      }
+    ]
   }
 };

@@ -74,7 +74,7 @@ function DeleteDialog({ open, setOpen, item }: DeleteDialogProps) {
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete download
-            progress for video "{item.video.title}".
+            progress for video &quot;{item.video.title}&quot;.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

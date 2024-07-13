@@ -4,7 +4,7 @@ export async function middleware(request: NextRequest) {
   const regex = /^\/video\/([0-9a-z-]+)$/;
   const match = request.nextUrl.pathname.match(regex);
 
-  if (!(match && match[1])) {
+  if (!match?.[1]) {
     return NextResponse.next();
   }
   const uuid = match[1];

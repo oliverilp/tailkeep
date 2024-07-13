@@ -20,7 +20,7 @@ function ErrorMessage({ text }: { text: string }) {
   );
 }
 
-export function DisplayActionResponse({ result }: ServerActionProps) {
+export default function DisplayActionResponse({ result }: ServerActionProps) {
   const { data, serverError, fetchError, validationErrors } = result;
 
   return (
