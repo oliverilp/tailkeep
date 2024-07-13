@@ -57,6 +57,7 @@ next-env.d.ts
 /docker/postgres_data
 /docker/redis_data
 /docker/videos
+**/cf_api_token.txt
 
 # Youtube-DL video files
 *.webm

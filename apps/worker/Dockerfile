@@ -15,19 +15,20 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 worker
+RUN usermod -a -G nodejs worker
+
 # Install youtube-dl
-RUN mkdir -p /home/node/.local/bin \
-    && curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /home/node/.local/bin/yt-dlp \
-    && chmod a+rx /home/node/.local/bin/yt-dlp  # Make executable \
-    && ln -s /home/node/.local/bin/yt-dlp /usr/local/bin/yt-dlp 
+RUN mkdir -p /home/worker/.local/bin \
+    && curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /home/worker/.local/bin/yt-dlp \
+    && chmod a+rx /home/worker/.local/bin/yt-dlp  # Make executable \
+    && ln -s /home/worker/.local/bin/yt-dlp /usr/local/bin/yt-dlp 
 
 COPY . .
 
 RUN corepack enable pnpm && pnpm i --frozen-lockfile
 RUN pnpm run build
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 worker
 
 USER worker
 

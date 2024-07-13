@@ -1,4 +1,45 @@
 services:
+  traefik:
+    image: traefik:3.1
+    container_name: tailkeep-traefik
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      # WWW
+      - 80:80
+      - 443:443
+      # The Web UI (enabled by --api.insecure=true)
+      - 8080:8080
+    environment:
+      - CF_DNS_API_TOKEN_FILE=/run/secrets/cf_api_token
+      - TRAEFIK_DASHBOARD_CREDENTIALS=${TRAEFIK_DASHBOARD_CREDENTIALS}
+    secrets:
+      - cf_api_token
+    env_file: .env
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/traefik.yml:ro
+      - ./traefik/acme.json:/acme.json:ro
+      - ./traefik/config.yml:/config.yml:ro
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.traefik.entrypoints=http'
+      - 'traefik.http.routers.traefik.rule=Host(`traefik-dashboard.demo.tailkeep.org`)'
+      - 'traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}'
+      - 'traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https'
+      - 'traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https'
+      - 'traefik.http.routers.traefik.middlewares=traefik-https-redirect'
+      - 'traefik.http.routers.traefik-secure.entrypoints=https'
+      - 'traefik.http.routers.traefik-secure.rule=Host(`traefik-dashboard.demo.tailkeep.org`)'
+      - 'traefik.http.routers.traefik-secure.middlewares=traefik-auth'
+      - 'traefik.http.routers.traefik-secure.tls=true'
+      - 'traefik.http.routers.traefik-secure.tls.certresolver=cloudflare'
+      - 'traefik.http.routers.traefik-secure.tls.domains[0].main=demo.tailkeep.org'
+      - 'traefik.http.routers.traefik-secure.tls.domains[0].sans=*.demo.tailkeep.org'
+      - 'traefik.http.routers.traefik-secure.service=api@internal'
+    restart: unless-stopped
   server:
     container_name: tailkeep-server
     image: tailkeep:latest
@@ -62,3 +103,7 @@ networks:
   tailkeep:
     name: tailkeep
     driver: bridge
+
+secrets:
+  cf_api_token:
+    file: ./traefik/cf_api_token.txt
