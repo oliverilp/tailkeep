@@ -1,15 +1,10 @@
 import { z } from 'zod';
+import { passwordSchema } from './password';
 
 export const changePasswordSchema = z.object({
-  oldPassword: z.string().min(8, {
-    message: 'Password must be at least 8 characters.'
-  }),
-  newPassword: z.string().min(8, {
-    message: 'Password must be at least 8 characters.'
-  }),
-  confirmNewPassword: z.string().min(8, {
-    message: 'Password must be at least 8 characters.'
-  })
+  oldPassword: passwordSchema,
+  newPassword: passwordSchema,
+  confirmNewPassword: passwordSchema
 });
 
 export type ChangePassword = z.infer<typeof changePasswordSchema>;
