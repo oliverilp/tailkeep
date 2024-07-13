@@ -1,0 +1,50 @@
+services:
+  server:
+    container_name: tailkeep-server
+    image: tailkeep:latest
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - REDIS_PORT=${REDIS_PORT}
+      - VIDEOS_PATH=${VIDEOS_PATH}
+      - NGINX_HOST=${NGINX_HOST}
+      - NGINX_PORT=${NGINX_PORT}
+      - DEMO_MODE=${DEMO_MODE}
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./videos:/videos:ro
+    depends_on:
+      - nginx
+      - db
+      - redis
+    restart: unless-stopped
+  nginx:
+    container_name: tailkeep-nginx
+    image: nginx
+    volumes:
+      - ./videos:/var/www/media:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
+  db:
+    container_name: tailkeep-postgres
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: tailkeep
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+  redis:
+    image: redis
+    container_name: tailkeep-redis
+    volumes:
+      - ./redis_data:/data
+    entrypoint: redis-server --appendonly yes
+    restart: unless-stopped
+
+networks:
+  tailkeep:
+    name: tailkeep
+    driver: bridge
