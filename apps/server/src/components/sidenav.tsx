@@ -41,7 +41,10 @@ function Wide() {
       <div className="fixed hidden h-screen w-[280px] md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <Link href="/" className="flex items-center gap-2 font-medium">
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-2 font-medium"
+            >
               <div className="bg-primary text-primary-foreground group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-xl text-lg md:h-8 md:w-8 md:text-base">
                 <Tv className="h-4 w-4 transition-all group-hover:scale-110" />
               </div>
@@ -100,7 +103,7 @@ function Narrow() {
       <div className="fixed min-h-screen w-14 flex-col justify-between sm:flex">
         <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
           <Link
-            href="/"
+            href="/dashboard"
             className="bg-primary text-primary-foreground group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-xl text-lg font-semibold md:h-8 md:w-8 md:text-base"
           >
             <Tv className="h-4 w-4 transition-all group-hover:scale-110" />

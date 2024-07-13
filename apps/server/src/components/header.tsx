@@ -29,7 +29,7 @@ function header() {
   };
 
   return (
-    <header className="bg-background sticky top-0 z-30 flex h-14 items-center gap-4 border-b px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+    <header className="bg-background sticky top-0 z-30 flex h-14 items-center gap-4 border-b px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-8">
       <Sheet>
         <SheetTrigger asChild>
           <Button size="icon" variant="outline" className="sm:hidden">
@@ -82,7 +82,9 @@ function header() {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <Link href="/dashboard/settings">
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+          </Link>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
         </DropdownMenuContent>

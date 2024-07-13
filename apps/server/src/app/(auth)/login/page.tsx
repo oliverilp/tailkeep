@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle
@@ -51,9 +50,6 @@ export function Login() {
       <Card className=" h-fit w-[90vw]  sm:w-[500px]">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
-          {/* <CardDescription className="text-destructive hidden">
-            Invalid credentials.
-          </CardDescription> */}
         </CardHeader>
 
         <Form {...form}>
