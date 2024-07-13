@@ -1,0 +1,33 @@
+# Ignore node_modules directories
+node_modules
+
+# Ignore log files
+**/*.log
+
+# Ignore build directories
+dist
+build
+.turbo
+.vercel
+.next
+
+# Ignore .env files
+.env
+.env.example
+
+# Ignore other temporary or unnecessary files
+**/*.tmp
+**/*.swp
+**/*.bak
+**/*.backup
+
+# Ignore IDE project directories
+.vscode/
+.idea/
+.iml/
+
+# Git
+**/.git
+
+.dockerignore
+README.md
