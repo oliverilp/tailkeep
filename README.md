@@ -8,8 +8,6 @@ This Turborepo includes the following packages/apps:
 
 - `server`: another [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
 - `worker` TypeScript worker for processing Redis message queue
-- `@tailkeep/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@tailkeep/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 

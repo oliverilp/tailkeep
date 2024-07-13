@@ -1,9 +1,34 @@
 {
-  "extends": "@tailkeep/typescript-config/worker.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Worker",
   "compilerOptions": {
+    "composite": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "moduleResolution": "Bundler",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "declaration": false,
+    "declarationMap": false,
+    "incremental": true,
+    "lib": ["ES2015", "esnext"],
     "outDir": "./dist",
-    "lib": ["ES2015", "esnext"]
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "strict": true,
+    "target": "es2022",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "exclude": ["node_modules"],
-  "include": ["./src"]
+  "include": ["./src"],
+  "exclude": ["node_modules"]
 }
