@@ -37,6 +37,8 @@ The system uses Redis and BullMQ for handling background tasks and message queue
 Data is stored in PostgreSQL, managed through Prisma, which allows for efficient querying and data manipulation.
 
 ## Planned features
+- Github Actions for CI/CD
+- Implement logging with some library
 - Add feature to change account's username
 - Destroy and recreate public demo server environment hourly
 - Fix some video playback problems by switching from native to custom player like react-player
