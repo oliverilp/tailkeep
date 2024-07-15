@@ -1,45 +1,37 @@
-# Tailkeep
+# Tailkeep - YouTube Video Archiver
 
-## What's inside?
+## Description
+Tailkeep is a free and open-source web application designed to help users download and archive YouTube videos. The primary motivation behind this project is to give users control over their data, especially in the context of the increasing tendency of big tech companies like YouTube to remove videos due to copyright strikes or other reasons. This is particularly relevant for music videos, song remixes, movie soundtracks and other content that might be taken down.
 
-This Turborepo includes the following packages/apps:
+## Motivation
+- **Control Over Data:** Users can have their own copies of videos, ensuring they are not lost due to removal from YouTube.
+- **Preservation of Content:** Helps in archiving videos that might be removed due to copyright issues or creator's decisions.
 
-### Apps and Packages
+## Features
+- Download and archive YouTube videos.
+- View and manage downloaded videos through a user-friendly dashboard.
+- Store video metadata for easy retrieval and management.
 
-- `server`: another [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
-- `worker` TypeScript worker for processing Redis message queue
+## Architecture
+The application is structured into two main components:
+1. **Server (Next.js App):** Handles the web interface, user authentication, and video management.
+2. **Worker:** Manages the downloading and processing of videos in the background.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+### Technologies Used
+- **TypeScript**
+- **React**
+- **Next.js**
+- **Tailwind CSS**
+- **Server-Sent Events (SSE)**
+- **PostgreSQL (with Prisma)**
+- **Redis**
+- **BullMQ**
+- **PNPM**
+- **Docker**
+- **Traefik**
 
-### Building packages/ui
+### Message Queues
+The system uses Redis and BullMQ for handling background tasks and message queues. This ensures that video downloading and processing tasks do not interfere with the main application’s performance.
 
-This example is set up to produce compiled styles for `ui` components into the `dist` directory. The component `.tsx` files are consumed by the Next.js apps directly using `transpilePackages` in `next.config.js`. This was chosen for several reasons:
-
-- Make sharing one `tailwind.config.js` to apps and packages as easy as possible.
-- Make package compilation simple by only depending on the Next.js Compiler and `tailwindcss`.
-- Ensure Tailwind classes do not overwrite each other. The `ui` package uses a `ui-` prefix for it's classes.
-- Maintain clear package export boundaries.
-
-Another option is to consume `packages/ui` directly from source without building. If using this option, you will need to update the `tailwind.config.js` in your apps to be aware of your package locations, so it can find all usages of the `tailwindcss` class names for CSS compilation.
-
-For example, in [tailwind.config.js](packages/tailwind-config/tailwind.config.js):
-
-```js
-  content: [
-    // app content
-    `src/**/*.{js,ts,jsx,tsx}`,
-    // include packages if not transpiling
-    "../../packages/ui/*.{js,ts,jsx,tsx}",
-  ],
-```
-
-If you choose this strategy, you can remove the `tailwindcss` and `autoprefixer` dependencies from the `ui` package.
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [Tailwind CSS](https://tailwindcss.com/) for styles
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+### Data Storage
+Data is stored in PostgreSQL, managed through Prisma, which allows for efficient querying and data manipulation.
