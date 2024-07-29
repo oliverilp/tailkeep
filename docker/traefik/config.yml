@@ -1,24 +1,24 @@
 http:
   #region routers
   routers:
-    proxmox:
+    tailkeep:
       entryPoints:
         - 'https'
-      rule: 'Host(`proxmox.local.example.com`)'
+      rule: 'Host(`demo.tailkeep.org`)'
       middlewares:
         - default-headers
         - https-redirectscheme
       tls: {}
-      service: proxmox
+      service: tailkeep
     pihole:
 
   #endregion
   #region services
   services:
-    proxmox:
+    tailkeep:
       loadBalancer:
         servers:
-          - url: 'https://192.168.0.17:8006'
+          - url: 'http://10.0.0.23:3000'
         passHostHeader: true
   #endregion
   middlewares:
