@@ -1,3 +1,3 @@
 mkdir -p /workspace/docker/videos
 sudo ln -s /workspace/docker/videos /videos
-sudo /workspace chown node:node node_modules .next
+sudo chown node:node /workspace node_modules .next

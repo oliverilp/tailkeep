@@ -1,10 +1,10 @@
 {
   "name": "Tailkeep",
   "dockerComposeFile": [
-    "../docker/docker-compose.yml",
+    "../docker/compose.dev.yml",
     "docker-compose.extend.yml"
   ],
-  "service": "tailkeep-server",
+  "service": "tailkeep-server-dev",
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
   "features": {
