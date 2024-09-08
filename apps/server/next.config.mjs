@@ -14,6 +14,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true
   },
+  experimental: {
+    serverComponentsExternalPackages: ['@node-rs/argon2']
+  },
   output: 'standalone'
 };
 

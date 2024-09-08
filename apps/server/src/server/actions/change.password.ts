@@ -1,6 +1,6 @@
 'use server';
 
-import * as argon2 from 'argon2';
+import * as argon2 from '@node-rs/argon2';
 import { flattenValidationErrors } from 'next-safe-action';
 import { authActionClient } from '@/lib/safe-action';
 import { validateRequest } from '@/lib/auth';

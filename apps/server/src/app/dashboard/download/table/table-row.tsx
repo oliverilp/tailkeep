@@ -96,13 +96,15 @@ function DownloadsTableRow({ item }: { item: DownloadProgressDto }) {
       <DeleteDialog open={open} setOpen={setOpen} item={item} />
       <TableRow>
         <TableCell className="hidden sm:table-cell">
-          <Image
-            alt="Video thumbnail"
-            className="aspect-video rounded-md object-cover"
-            height="1280"
-            width="720"
-            src={item.video.thumbnailUrl}
-          />
+          <Link href={`/dashboard/video/${item.video.id}`} className="">
+            <Image
+              alt="Video thumbnail"
+              className="aspect-video rounded-md object-cover"
+              height="1280"
+              width="720"
+              src={item.video.thumbnailUrl}
+            />
+          </Link>
         </TableCell>
         <TableCell className="font-medium">{item.video.title}</TableCell>
         <TableCell className="hidden lg:table-cell">

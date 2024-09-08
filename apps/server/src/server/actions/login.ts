@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import * as argon2 from 'argon2';
+import * as argon2 from '@node-rs/argon2';
 import { flattenValidationErrors } from 'next-safe-action';
 import { actionClient } from '@/lib/safe-action';
 import { loginSchema } from '@/schemas/login';
