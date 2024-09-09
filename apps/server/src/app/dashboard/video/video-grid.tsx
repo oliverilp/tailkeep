@@ -13,7 +13,7 @@ function VideoGrid({ videos }: VideoGridProps) {
   return (
     <div className="h-full w-full">
       <div
-        className={cn('flex w-full flex-wrap gap-8', {
+        className={cn('flex w-full flex-wrap justify-center gap-8', {
           'h-full': !videos?.length
         })}
       >
