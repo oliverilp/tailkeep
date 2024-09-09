@@ -8,6 +8,7 @@ on:
       - 'apps/server/**'
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
+  workflow_dispatch:
 
 env:
   # github.repository as <account>/<repo>
