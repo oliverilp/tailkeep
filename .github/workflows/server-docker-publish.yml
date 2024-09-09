@@ -1,4 +1,4 @@
-name: Server Docker Workflow
+name: Server Docker Publish
 
 on:
   push:
