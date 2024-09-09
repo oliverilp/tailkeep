@@ -48,12 +48,12 @@ Data is stored in PostgreSQL, managed through Prisma, which allows for efficient
 
 ## Planned features
 
-- Github Actions for CI/CD
-- Implement logging with some library
-- Add feature to change account's username
-- Destroy and recreate public demo server environment hourly
-- Fix some video playback problems by switching from native to custom player like react-player
-- Add video transcoding to stream lower quality versions for slow networks by using HLS and DASH protocols with ffmpeg and [nginx-rtmp-module](https://github.com/arut/nginx-rtmp-module)
-- Add feature to download entire channel's video content
-- Add feature to subscribe to new video releases for channels
-- Add feature to to create playlists in WEB UI
+- [x] Github Actions for CI/CD
+- [ ] Remove any editing/updates on public demo server
+- [ ] Implement logging with pino library
+- [ ] Add feature to change account's username
+- [ ] Fix some video playback problems by switching from native to custom player like react-player
+- [ ] Add video transcoding to stream lower quality versions for slow networks by using HLS and DASH protocols with ffmpeg and [nginx-rtmp-module](https://github.com/arut/nginx-rtmp-module)
+- [ ] Add feature to download entire channel's video content
+- [ ] Add feature to subscribe to new video releases for channels
+- [ ] Add feature to to create playlists in WEB UI
