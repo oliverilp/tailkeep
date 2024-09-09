@@ -1,26 +1,4 @@
 http:
-  #region routers
-  routers:
-    tailkeep:
-      entryPoints:
-        - 'https'
-      rule: 'Host(`demo.tailkeep.org`)'
-      middlewares:
-        - default-headers
-        - https-redirectscheme
-      tls: {}
-      service: tailkeep
-    pihole:
-
-  #endregion
-  #region services
-  services:
-    tailkeep:
-      loadBalancer:
-        servers:
-          - url: 'http://10.0.0.23:3000'
-        passHostHeader: true
-  #endregion
   middlewares:
     https-redirectscheme:
       redirectScheme:

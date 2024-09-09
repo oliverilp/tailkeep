@@ -21,7 +21,7 @@ services:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik/traefik.yml:/traefik.yml:ro
-      - ./traefik/acme.json:/acme.json:ro
+      - ./traefik/acme.json:/acme.json
       - ./traefik/config.yml:/config.yml:ro
     labels:
       - 'traefik.enable=true'
@@ -36,13 +36,15 @@ services:
       - 'traefik.http.routers.traefik-secure.middlewares=traefik-auth'
       - 'traefik.http.routers.traefik-secure.tls=true'
       - 'traefik.http.routers.traefik-secure.tls.certresolver=cloudflare'
-      - 'traefik.http.routers.traefik-secure.tls.domains[0].main=demo.tailkeep.org'
-      - 'traefik.http.routers.traefik-secure.tls.domains[0].sans=*.demo.tailkeep.org'
+      - 'traefik.http.routers.traefik-secure.tls.domains[0].main=tailkeep.org'
+      - 'traefik.http.routers.traefik-secure.tls.domains[0].sans=*.tailkeep.org'
       - 'traefik.http.routers.traefik-secure.service=api@internal'
     restart: unless-stopped
+    networks:
+      - proxy
   server:
     container_name: tailkeep-server
-    image: tailkeep:latest
+    image: ghcr.io/oliverilp/tailkeep-server:latest@sha256:09df158852d6d0cc5fc4303bb949a2feaa6d6911dcb778bd29624562b08b824e
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - REDIS_URL=${REDIS_URL}
@@ -51,8 +53,12 @@ services:
       - NGINX_HOST=${NGINX_HOST}
       - NGINX_PORT=${NGINX_PORT}
       - DEMO_MODE=${DEMO_MODE}
-    ports:
-      - '3000:3000'
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.tailkeep.rule=Host(`demo.tailkeep.org`)'
+      - 'traefik.http.routers.tailkeep.entrypoints=https'
+      - 'traefik.http.routers.tailkeep.tls=true'
+      - 'traefik.http.services.tailkeep.loadbalancer.server.port=3000'
     volumes:
       - ./videos:/videos:ro
     depends_on:
@@ -60,9 +66,11 @@ services:
       - db
       - redis
     restart: unless-stopped
+    networks:
+      - proxy
   worker:
     container_name: tailkeep-worker
-    image: tailkeep-worker:latest
+    image: ghcr.io/oliverilp/tailkeep-worker:latest@sha256:999f5dfa99a66364f1bb7d48d0559b7c07712dd830876944d802b711ea2480ce
     environment:
       - REDIS_URL=${REDIS_URL}
       - REDIS_PORT=${REDIS_PORT}
@@ -74,6 +82,8 @@ services:
       - db
       - redis
     restart: unless-stopped
+    networks:
+      - proxy
   nginx:
     container_name: tailkeep-nginx
     image: nginx
@@ -81,6 +91,8 @@ services:
       - ./videos:/var/www/media:ro
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     restart: unless-stopped
+    networks:
+      - proxy
   db:
     container_name: tailkeep-postgres
     image: postgres:alpine
@@ -91,6 +103,8 @@ services:
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
+    networks:
+      - proxy
   redis:
     image: redis
     container_name: tailkeep-redis
@@ -98,11 +112,13 @@ services:
       - ./redis_data:/data
     entrypoint: redis-server --appendonly yes
     restart: unless-stopped
+    networks:
+      - proxy
 
 networks:
-  tailkeep:
-    name: tailkeep
-    driver: bridge
+  proxy:
+    name: proxy
+    external: true
 
 secrets:
   cf_api_token:
