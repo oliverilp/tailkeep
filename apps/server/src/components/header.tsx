@@ -13,7 +13,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger
+} from '@/components/ui/sheet';
 import { routes } from '@/lib/routes';
 import { cn } from '@/lib/utils';
 import NavIcon from '@/components/nav-icon';
@@ -48,17 +53,19 @@ function header() {
             </Link>
 
             {routes.map((link) => (
-              <Link
-                href={link.href}
-                key={link.href}
-                className={cn(
-                  'flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground',
-                  { 'text-foreground': pathname === link.href }
-                )}
-              >
-                <NavIcon name={link.name} />
-                <span>{link.name}</span>
-              </Link>
+              <SheetClose asChild key={link.href}>
+                <Link
+                  href={link.href}
+                  key={link.href}
+                  className={cn(
+                    'flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground',
+                    { 'text-foreground': pathname === link.href }
+                  )}
+                >
+                  <NavIcon name={link.name} />
+                  <span>{link.name}</span>
+                </Link>
+              </SheetClose>
             ))}
           </nav>
         </SheetContent>
