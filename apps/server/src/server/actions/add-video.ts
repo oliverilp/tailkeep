@@ -15,10 +15,15 @@ export const addVideoAction = authActionClient
     handleValidationErrorsShape: (ve) => flattenValidationErrors(ve).fieldErrors
   })
   .action(async ({ parsedInput: { url } }) => {
-    const urlObject = new URL(url);
-    urlObject.search = '';
+    const parsedUrl = new URL(url);
+    let videoId = parsedUrl.searchParams.get('v');
+    parsedUrl.search = '';
 
-    await metadataQueue.add('metadata', { url: urlObject.toString() });
+    if (parsedUrl.hostname === 'www.youtube.com' && videoId !== null) {
+      parsedUrl.searchParams.set('v', videoId);
+    }
+
+    await metadataQueue.add('metadata', { url: parsedUrl.toString() });
 
     console.log('added to queue');
     console.log(
