@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useAction } from 'next-safe-action/hooks';
@@ -11,9 +11,15 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage
 } from '@/components/ui/form';
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { addVideoAction } from '@/server/actions/add-video';
 
@@ -44,38 +50,44 @@ function AddVideo() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex gap-3 space-y-8 sm:w-full"
-      >
-        <div className="w-full sm:w-fit">
-          <FormField
-            control={form.control}
-            name="url"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Video URL</FormLabel>
-                <FormControl>
-                  <Input
-                    className="w-full md:w-[350px] xl:w-[420px]"
-                    placeholder="https://www.youtube.com"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <Card className="sm:col-span-2">
+          <CardHeader className="pb-3">
+            <CardTitle>Add Video</CardTitle>
+            <CardDescription className="max-w-lg text-balance leading-relaxed">
+              Enter the YouTube link start downloading your video.
+            </CardDescription>
+          </CardHeader>
+          <CardFooter className="flex items-start gap-3 sm:w-full">
+            <div className="w-full max-w-[515px]">
+              <FormField
+                control={form.control}
+                name="url"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        className="w-full"
+                        placeholder="https://www.youtube.com"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            {isExecuting ? (
+              <Button disabled>
+                <Loader2 className="h-5 w-5 animate-spin" />
+              </Button>
+            ) : (
+              <Button type="submit">
+                <Plus className="h-5 w-5" />
+              </Button>
             )}
-          />
-        </div>
-        {isExecuting ? (
-          <Button className="w-16" disabled>
-            <Loader2 className="h-4 w-4 animate-spin" />
-          </Button>
-        ) : (
-          <Button className="w-16" type="submit">
-            Add
-          </Button>
-        )}
+          </CardFooter>
+        </Card>
       </form>
     </Form>
   );
