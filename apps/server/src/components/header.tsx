@@ -17,6 +17,9 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet';
 import { routes } from '@/lib/routes';
@@ -43,6 +46,13 @@ function header() {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="sm:max-w-xs">
+          <SheetHeader className="hidden">
+            <SheetTitle>Navigation Menu</SheetTitle>
+            <SheetDescription>
+              Sidebar navigation menu with links to primary sections of the
+              website.
+            </SheetDescription>
+          </SheetHeader>
           <nav className="grid gap-6 text-lg font-medium">
             <Link
               href="/"

@@ -61,7 +61,7 @@ function Settings({ isDemo }: SettingsProps) {
     <main className="grid items-start gap-4 p-4 sm:px-8 sm:py-0 md:gap-8">
       <div className="flex w-full flex-col">
         {/* <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10"> */}
-        <main className="flex flex-1 flex-col gap-4 md:gap-8">
+        <div className="flex flex-1 flex-col gap-4 md:gap-8">
           <div className="mx-auto grid w-full max-w-6xl gap-2">
             <h1 className="text-3xl font-semibold">Settings</h1>
           </div>
@@ -178,7 +178,7 @@ function Settings({ isDemo }: SettingsProps) {
               </Card>
             </div>
           </div>
-        </main>
+        </div>
       </div>
     </main>
   );
