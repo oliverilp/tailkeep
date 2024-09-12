@@ -3,7 +3,7 @@ import React from 'react';
 
 function Subscriptions() {
   return (
-    <div className="grid h-full w-full place-items-center">
+    <main className="grid h-full w-full place-items-center">
       <div className="flex w-full flex-col items-center">
         <ListVideo className="mb-2 h-12 w-12 text-muted-foreground" />
         <div className="font-semibold">Subscriptions page</div>
@@ -11,7 +11,7 @@ function Subscriptions() {
           This feature is coming soon™.
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

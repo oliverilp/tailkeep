@@ -33,7 +33,7 @@ function BreadcrumbLinks() {
   }
 
   return (
-    <Breadcrumb className="hidden md:flex">
+    <Breadcrumb className="hidden sm:flex">
       <BreadcrumbList>
         {breadcrumbs.map((breadcrumb, index) => (
           <Fragment key={breadcrumb.path}>
