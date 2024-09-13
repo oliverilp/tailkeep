@@ -46,9 +46,10 @@ The system uses Redis and BullMQ for handling background tasks and message queue
 
 Data is stored in PostgreSQL, managed through Prisma, which allows for efficient querying and data manipulation.
 
-## Planned features
+## Implemented features
 
 - [x] Github Actions for CI/CD
+- [x] Traefik HTTP/3 protocol support
 - [ ] Remove any editing/updates on public demo server
 - [ ] Implement logging with pino library
 - [ ] Add feature to change account's username

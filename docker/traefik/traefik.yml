@@ -11,6 +11,8 @@ entryPoints:
           scheme: https
   https:
     address: ':443'
+    http3:
+      advertisedPort: 443
 providers:
   docker:
     endpoint: 'unix:///var/run/docker.sock'
