@@ -15,7 +15,7 @@ const nextConfig = {
     ignoreDuringBuilds: true
   },
   experimental: {
-    serverComponentsExternalPackages: ['@node-rs/argon2']
+    serverComponentsExternalPackages: ['@node-rs/argon2', 'bullmq']
   },
   output: 'standalone'
 };
