@@ -46,9 +46,9 @@ export class MetadataFetcher {
       durationString: json.duration_string,
       duration: json.duration,
       thumbnailUrl: json.thumbnail,
-      description: json.description,
-      viewCount: json.view_count,
-      commentCount: json.comment_count,
+      description: json.description ?? '',
+      viewCount: json.view_count ?? 0,
+      commentCount: json.comment_count ?? 0,
       filename: json.filename
     };
 
