@@ -27,8 +27,8 @@ function VideoGrid({ videos }: VideoGridProps) {
               >
                 <div className="relative aspect-video max-w-80 overflow-hidden rounded-xl">
                   <Image
-                    alt="Video thumbnail"
-                    fill={true}
+                    alt={video.title}
+                    fill
                     className="scale-105 object-cover transition-transform group-hover:scale-100"
                     src={video.thumbnailUrl}
                     sizes="20rem"

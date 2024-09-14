@@ -21,7 +21,7 @@ function DownloadsTable({ items }: DownloadsTableProps) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="hidden w-[100px] sm:table-cell">
+          <TableHead className="hidden w-28 sm:table-cell">
             <span className="sr-only">Image</span>
           </TableHead>
           <TableHead>Name</TableHead>

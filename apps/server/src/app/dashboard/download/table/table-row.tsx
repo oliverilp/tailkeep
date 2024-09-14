@@ -98,10 +98,10 @@ function DownloadsTableRow({ item }: { item: DownloadProgressDto }) {
         <TableCell className="hidden sm:table-cell">
           <Link href={`/dashboard/video/${item.video.id}`} className="">
             <Image
-              alt="Video thumbnail"
+              alt={item.video.title}
               className="aspect-video rounded-md object-cover"
-              height="1280"
-              width="720"
+              width="80"
+              height="45"
               src={item.video.thumbnailUrl}
             />
           </Link>
