@@ -1,13 +1,13 @@
 import {
-  DownloadProgressDto,
-  downloadProgressDtoSchema
-} from '@/schemas/progress';
+  DownloadsDashboard,
+  downloadsDashboardSchema
+} from '@/schemas/downloads-dashboard';
 import { useEffect, useState } from 'react';
 
 export function useServerEvents(
-  initialData: DownloadProgressDto[]
-): DownloadProgressDto[] {
-  const [data, setData] = useState<DownloadProgressDto[]>(initialData);
+  initialData: DownloadsDashboard
+): DownloadsDashboard {
+  const [data, setData] = useState<DownloadsDashboard>(initialData);
 
   useEffect(() => {
     setData(initialData);
@@ -18,7 +18,7 @@ export function useServerEvents(
 
     eventSource.onmessage = (event: MessageEvent<string>) => {
       const json: unknown = JSON.parse(event.data);
-      const newData = downloadProgressDtoSchema.array().parse(json);
+      const newData = downloadsDashboardSchema.parse(json);
 
       setData(newData);
     };

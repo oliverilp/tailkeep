@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { progressEmitter } from '@/lib/bullmq';
-import type { DownloadProgress } from '@/schemas/progress';
+import type { DownloadsDashboard } from '@/schemas/downloads-dashboard';
 import { validateRequest } from '@/lib/auth';
 
 // API for server-sent events.
@@ -12,7 +12,7 @@ export async function GET() {
 
   const stream = new ReadableStream({
     start(controller) {
-      const update = (download: DownloadProgress) => {
+      const update = (download: DownloadsDashboard) => {
         // Unsubscribe to event listener when connection is closed.
         if (!stream.locked) {
           progressEmitter.off('update', update);

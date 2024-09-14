@@ -4,11 +4,10 @@ import { addVideo } from '@/server/data/add-video';
 import { addDownload } from '@/server/data/add-download';
 import { completeDownload } from '@/server/data/complete-download';
 import { videoSchema } from '@/schemas/video';
-import {
-  type DownloadProgressDto,
-  downloadProgressSchema
-} from '@/schemas/progress';
+import { downloadProgressSchema } from '@/schemas/progress';
 import { getDownloads } from '@/server/data/get-downloads';
+import { getQueueInfo } from '@/server/data/get-queue-info';
+import type { DownloadsDashboard } from '@/schemas/downloads-dashboard';
 
 const connection: ConnectionOptions = {
   host: process.env.REDIS_URL ?? 'localhost',
@@ -19,13 +18,21 @@ export const metadataQueue = new Queue('metadata-queue', { connection });
 export const downloadQueue = new Queue('download-queue', { connection });
 export const progressEmitter = new EventEmitter();
 
+export async function emitDashboardUpdates() {
+  const [downloads, queueInfo] = await Promise.all([
+    await getDownloads(),
+    await getQueueInfo()
+  ]);
+
+  progressEmitter.emit<DownloadsDashboard>('update', { queueInfo, downloads });
+}
+
 const downloadEvents = new QueueEvents('download-queue', { connection });
 downloadEvents.on('progress', async ({ data }) => {
   const progress = downloadProgressSchema.parse(data);
   await addDownload(progress);
 
-  const downloads = await getDownloads();
-  progressEmitter.emit<DownloadProgressDto[]>('update', downloads);
+  emitDashboardUpdates();
 });
 
 downloadEvents.on('completed', async ({ jobId }) => {
@@ -37,8 +44,7 @@ downloadEvents.on('completed', async ({ jobId }) => {
   const progress = downloadProgressSchema.parse(job.returnvalue);
   await completeDownload(progress);
 
-  const downloads = await getDownloads();
-  progressEmitter.emit<DownloadProgressDto[]>('update', downloads);
+  emitDashboardUpdates();
 });
 
 const metadataEvents = new QueueEvents('metadata-queue', { connection });

@@ -2,7 +2,7 @@
 
 import { z } from 'zod';
 import { flattenValidationErrors } from 'next-safe-action';
-import { metadataQueue } from '@/lib/bullmq';
+import { emitDashboardUpdates, metadataQueue } from '@/lib/bullmq';
 import { authActionClient } from '@/lib/safe-action';
 import { sleep } from '@/lib/utils';
 
@@ -24,23 +24,14 @@ export const addVideoAction = authActionClient
     }
 
     await metadataQueue.add('metadata', { url: parsedUrl.toString() });
-
     console.log('added to queue');
-    console.log(
-      'info',
-      await metadataQueue.getJobCounts(
-        'wait',
-        'delayed',
-        'waiting',
-        'active',
-        'completed'
-      )
-    );
 
     // Delay the response to give the UI time to display a spinner.
     // Since the message queue worker processes requests asynchronously,
     // it's better to wait briefly, as the request completion is not instantaneous.
+    // Also emitDashboardUpdates() needs to wait for the message to be processed.
     await sleep(500);
+    await emitDashboardUpdates();
 
     return { message: 'Video added to queue.' };
   });

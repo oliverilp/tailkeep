@@ -66,7 +66,7 @@ function DownloadsTab({ items, max, limit, searchParams }: DownloadTabProps) {
             />
           )}
         </div>
-        <div className="text-muted-foreground   text-xs">
+        <div className="text-xs text-muted-foreground">
           Showing{' '}
           <strong>
             {start}-{end}
@@ -80,7 +80,7 @@ function DownloadsTab({ items, max, limit, searchParams }: DownloadTabProps) {
 
 function DownloadsTableLayout({ items }: DownloadsTableLayoutProps) {
   const tabs: Tab[] = ['all', 'active', 'done'];
-  const limit = 5;
+  const limit = 10;
 
   const searchParams = useSearchParams();
   const queryEntries = Object.fromEntries(searchParams.entries());

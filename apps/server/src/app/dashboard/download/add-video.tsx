@@ -55,7 +55,7 @@ function AddVideo() {
           <CardHeader className="pb-3">
             <CardTitle>Add Video</CardTitle>
             <CardDescription className="max-w-lg text-balance leading-relaxed">
-              Enter the YouTube link start downloading your video.
+              Enter the YouTube link to queue your video for download.
             </CardDescription>
           </CardHeader>
           <CardFooter className="flex items-start gap-3 sm:w-full">

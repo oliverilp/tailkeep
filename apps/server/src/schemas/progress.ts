@@ -1,4 +1,4 @@
-import { nullable, z } from 'zod';
+import { z } from 'zod';
 import { videoDtoSchema } from '@/schemas/video';
 
 export const downloadProgressSchema = z.object({
