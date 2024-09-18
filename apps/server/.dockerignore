@@ -33,5 +33,4 @@ build
 README.md
 
 # Videos
-**/media
-**/video
+./public/youtube
