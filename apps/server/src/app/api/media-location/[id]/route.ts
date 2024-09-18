@@ -28,11 +28,13 @@ export async function GET(
 
   const video = await getVideoById(parsedResult.data);
   if (!video) {
-    return NextResponse.json({ error: 'File not found' }, { status: 404 });
+    console.error('Video not found in DB:', parsedResult.data);
+    return NextResponse.json({ error: 'Video not found' }, { status: 404 });
   }
 
   const filepath = path.join(MEDIA_PATH, video.filename);
   if (!fs.existsSync(filepath)) {
+    console.error('File not found on disk:', filepath);
     return NextResponse.json({ error: 'File not found' }, { status: 404 });
   }
 
