@@ -59,7 +59,7 @@ services:
       - 'traefik.http.routers.tailkeep.tls=true'
       - 'traefik.http.services.tailkeep.loadbalancer.server.port=3000'
     volumes:
-      - ./videos:/videos:ro
+      - ./youtube:/youtube:ro
     depends_on:
       - db
       - redis
@@ -74,7 +74,7 @@ services:
       - REDIS_PORT=${REDIS_PORT}
       - MEDIA_PATH=${MEDIA_PATH}
     volumes:
-      - ./videos:/videos
+      - ./youtube:/youtube
     depends_on:
       - db
       - redis

@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
   const responsePath = match[1] === 'video' ? videoPath : imagePath;
 
   const url = request.nextUrl.clone();
-  url.pathname = `/media/${responsePath}`;
+  url.pathname = `/youtube/${responsePath}`;
 
   return NextResponse.rewrite(url);
 }

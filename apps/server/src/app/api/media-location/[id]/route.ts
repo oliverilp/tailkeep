@@ -59,7 +59,7 @@ export async function GET(
 }
 
 async function createSymlink(mediaPath: string) {
-  const publicPath = path.resolve(process.cwd(), './public/media/');
+  const publicPath = path.resolve(process.cwd(), './public/youtube/');
 
   try {
     if (fs.existsSync(publicPath)) {

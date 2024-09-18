@@ -58,6 +58,7 @@ next-env.d.ts
 /docker/redis_data
 **/videos
 **/media
+**/youtube
 **/cf_api_token.txt
 **/acme.json
 
