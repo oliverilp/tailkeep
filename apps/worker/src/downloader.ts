@@ -117,7 +117,7 @@ export class Downloader {
 
     try {
       const filePath = path.join(
-        process.env.VIDEOS_PATH ?? '/videos',
+        process.env.MEDIA_PATH ?? '/videos',
         this.filename
       );
       const stats = await fs.stat(filePath);

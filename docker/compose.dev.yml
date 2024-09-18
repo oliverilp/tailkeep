@@ -1,13 +1,4 @@
 services:
-  nginx:
-    container_name: tailkeep-nginx
-    image: nginx
-    volumes:
-      - ./videos:/var/www/media:ro
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    ports:
-      - '8000:80'
-    restart: unless-stopped
   db:
     container_name: tailkeep-postgres
     image: postgres:alpine

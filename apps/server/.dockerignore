@@ -31,3 +31,7 @@ build
 
 .dockerignore
 README.md
+
+# Videos
+**/media
+**/video
